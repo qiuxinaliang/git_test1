@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "Inc \\",
+                "Drivers/STM32F4xx_HAL_Driver/Inc \\",
+                "Drivers/STM32F4xx_HAL_Driver/Inc/Legacy \\",
+                "Drivers/CMSIS/Device/ST/STM32F4xx/Include \\",
+                "Drivers/CMSIS/Include \\",
+                "Drivers/CMSIS/Include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "_CC_ARM",
+                "USE_HAL_DRIVER",
+                "STM32F429xx"
+            ],
+            "compilerPath": "D:\\tools\\gcc\\mingw\\bin\\gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++14"
+        }
+    ],
+    "version": 4
+}

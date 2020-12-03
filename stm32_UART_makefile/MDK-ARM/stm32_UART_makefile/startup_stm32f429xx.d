@@ -1,0 +1,1 @@
+stm32_uart_makefile\startup_stm32f429xx.o: startup_stm32f429xx.s
