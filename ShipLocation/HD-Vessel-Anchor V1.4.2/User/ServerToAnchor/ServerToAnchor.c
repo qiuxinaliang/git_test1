@@ -1,17 +1,13 @@
 /*
  * @:*********************************************************************************************************: 
  * @Date: 2020-11-04 15:41:09
- * @LastEditTime: 2020-11-27 19:33:54
+ * @LastEditTime: 2020-12-04 14:24:55
  * @**********************************************************************************************************: 
  */
 #include "ServerToAnchor.h"
 #include "public.h"
 
-extern upgrateInfo_stru upgrateInfo_stru_temp;
-extern HardwareInfo_Stru HardwareInfo_stru_temp;
-extern Network_Manage Network_Manage_stru_temp; // 网络参数保存
 NetworkRecvData_Stru NetworkRecvData_Stru_temp;
-
 /*
 *********************************************************************************************************
 *	函 数 名: PowerOnMessage_Handle
@@ -21,6 +17,7 @@ NetworkRecvData_Stru NetworkRecvData_Stru_temp;
 *********************************************************************************************************
 */
 extern RTC_HandleTypeDef RTC_Handler;
+extern uint8_t DeviceSelfCheckInfo;
 void PowerOnMessage_Handle(void)
 {
   DevicePowerOn_Stru DevicePowerOn_Stru_temp;
@@ -45,7 +42,7 @@ void PowerOnMessage_Handle(void)
   DevicePowerOn_Stru_temp.TimeStampID =  ReportTimeStampID;
   DevicePowerOn_Stru_temp.TimeStamp = rtc_timestamp;
   DevicePowerOn_Stru_temp.SelfCheckID = SelfCheckID;
-  DevicePowerOn_Stru_temp.SelfCheck= HardwareInfo_stru_temp.SelfCheckInfo;
+  DevicePowerOn_Stru_temp.SelfCheck= DeviceSelfCheckInfo;
   DevicePowerOn_Stru_temp.AnchorWorkModeID = AnchorWorkModeID;
   DevicePowerOn_Stru_temp.AnchorWorkMode = E_AnchorWorkMode;
   DevicePowerOn_Stru_temp.ProtocolFrameEnderUint_Temp.CalibrationValue = UDP_public_Sum_check(((uint8_t *)&DevicePowerOn_Stru_temp) + 3, sizeof(DevicePowerOn_Stru_temp) - 6); 
@@ -77,7 +74,7 @@ void DeviceReportHeart(void)
   AnchorSendHeart_Stru_temp.TimeStampID =  ReportTimeStampID;
   AnchorSendHeart_Stru_temp.TimeStamp = rtc_timestamp;
   AnchorSendHeart_Stru_temp.SelfCheckID = SelfCheckID;
-  AnchorSendHeart_Stru_temp.SelfCheck= DeviceSelfCheck;
+  AnchorSendHeart_Stru_temp.SelfCheck=  DeviceSelfCheckInfo;
   AnchorSendHeart_Stru_temp.AnchorWorkModeID = AnchorWorkModeID;
   AnchorSendHeart_Stru_temp.AnchorWorkMode = E_AnchorWorkMode;
   AnchorSendHeart_Stru_temp.ProtocolFrameEnderUint_Temp.CalibrationValue = UDP_public_Sum_check(((uint8_t *)&AnchorSendHeart_Stru_temp) + 3, sizeof(AnchorSendHeart_Stru_temp) - 6); 
@@ -167,7 +164,7 @@ void DevResponConfigInfoRequst(uint8_t CmdAck, uint32_t TimeStamp)
   DevResponConfigInfo_Stru_temp.HardwareVersionID =  HardwareVersionID;
   memcpy((uint8_t *)&DevResponConfigInfo_Stru_temp.HardwareVersion, (uint8_t *)&E_Version_stru_temp.HardwareVersion, 3);
   DevResponConfigInfo_Stru_temp.SelfCheckID = SelfCheckID;
-  DevResponConfigInfo_Stru_temp.SelfCheck = HardwareInfo_stru_temp.SelfCheckInfo;
+  DevResponConfigInfo_Stru_temp.SelfCheck = DeviceSelfCheckInfo;
   DevResponConfigInfo_Stru_temp.AnchorWorkModeID = AnchorWorkModeID;
   DevResponConfigInfo_Stru_temp.AnchorWorkMode = E_AnchorWorkMode;
   DevResponConfigInfo_Stru_temp.PowerOnTypeID = PowerOnTypeID;
@@ -367,22 +364,16 @@ void ServerCtrlAnchor_Handle(void)
       ServiceAndDeviceResponse(DataFrameState, CmdAck, TimeStamp);
       if( ServerCtrlAnchor_Stru_temp->ServerCtrlAnchor == PowerOnOpen)
       {
-        HardwareInfo_stru_temp.PowerOnType = ServerCtrlAnchor_Stru_temp->ServerCtrlAnchor;
         E_PowerOnType = ServerCtrlAnchor_Stru_temp->ServerCtrlAnchor;
         EE_PowerOnType_Write();
-        //PowerOnType_Write();
         SYS_REBOOT();
       }
       else if(ServerCtrlAnchor_Stru_temp->ServerCtrlAnchor == SysReboot)
       {
-        HardwareInfo_stru_temp.PowerOnType = ServerCtrlAnchor_Stru_temp->ServerCtrlAnchor;
-				//upgrateFlag_Write();
         upgrateFlag = 1;
         EE_upgrateFlag_Write();
         E_PowerOnType = ServerCtrlAnchor_Stru_temp->ServerCtrlAnchor;
         EE_PowerOnType_Write();
-        //PowerOnType_Write();
-				//AT_24C02_write_data(FLAG_IAP, 0x5A);
         SYS_REBOOT();
       }
       else ;

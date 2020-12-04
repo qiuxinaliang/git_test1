@@ -120,7 +120,6 @@
 ..\output\netif.o: ..\SX127X\example\Lora_demo.h
 ..\output\netif.o: ..\User\network\network.h
 ..\output\netif.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\netif.o: ..\User\eeprom\bsp_i2c.h
 ..\output\netif.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\netif.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\netif.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

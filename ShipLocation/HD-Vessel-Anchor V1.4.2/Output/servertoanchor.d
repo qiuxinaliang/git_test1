@@ -115,4 +115,3 @@
 ..\output\servertoanchor.o: ..\SX127X\example\Lora_demo.h
 ..\output\servertoanchor.o: ..\User\network\network.h
 ..\output\servertoanchor.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\servertoanchor.o: ..\User\eeprom\bsp_i2c.h

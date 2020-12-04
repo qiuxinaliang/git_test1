@@ -122,7 +122,6 @@
 ..\output\lowpan6_common.o: ..\SX127X\example\Lora_demo.h
 ..\output\lowpan6_common.o: ..\User\network\network.h
 ..\output\lowpan6_common.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\lowpan6_common.o: ..\User\eeprom\bsp_i2c.h
 ..\output\lowpan6_common.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\lowpan6_common.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\lowpan6_common.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

@@ -120,7 +120,6 @@
 ..\output\netifapi.o: ..\SX127X\example\Lora_demo.h
 ..\output\netifapi.o: ..\User\network\network.h
 ..\output\netifapi.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\netifapi.o: ..\User\eeprom\bsp_i2c.h
 ..\output\netifapi.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\netifapi.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\netifapi.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

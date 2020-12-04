@@ -120,7 +120,6 @@
 ..\output\tcp_in.o: ..\SX127X\example\Lora_demo.h
 ..\output\tcp_in.o: ..\User\network\network.h
 ..\output\tcp_in.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\tcp_in.o: ..\User\eeprom\bsp_i2c.h
 ..\output\tcp_in.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\tcp_in.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\tcp_in.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

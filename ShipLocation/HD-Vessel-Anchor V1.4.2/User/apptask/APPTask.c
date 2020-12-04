@@ -1,7 +1,7 @@
 /*
  * @:*********************************************************************************************************: 
  * @Date: 2020-11-04 10:26:13
- * @LastEditTime: 2020-11-26 11:16:43
+ * @LastEditTime: 2020-12-04 14:20:07
  * @**********************************************************************************************************: 
  */
 #include "APPTask.h"
@@ -205,7 +205,7 @@ static void LoraMessage_Task(void * param)
 static void HeartPacketMessage_Task(void * param)
 {	
 	int rand_temp = 0;
-	srand(Staticgloabl_stru_temp.timestamp);
+	srand(E_Staticgloabl_stru_temp.timestamp);
   rand_temp = rand()%1000 + 1000;      //产生一个30到50的随机数
   vTaskDelay(rand_temp);
 	// 通过上传心跳包进行开机注册

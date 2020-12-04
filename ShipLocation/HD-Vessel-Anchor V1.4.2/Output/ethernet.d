@@ -120,7 +120,6 @@
 ..\output\ethernet.o: ..\SX127X\example\Lora_demo.h
 ..\output\ethernet.o: ..\User\network\network.h
 ..\output\ethernet.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\ethernet.o: ..\User\eeprom\bsp_i2c.h
 ..\output\ethernet.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\ethernet.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\ethernet.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

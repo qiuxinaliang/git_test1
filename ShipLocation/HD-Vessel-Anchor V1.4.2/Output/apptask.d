@@ -115,4 +115,3 @@
 ..\output\apptask.o: ..\SX127X\example\Lora_demo.h
 ..\output\apptask.o: ..\User\network\network.h
 ..\output\apptask.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\apptask.o: ..\User\eeprom\bsp_i2c.h

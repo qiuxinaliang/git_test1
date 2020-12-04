@@ -120,7 +120,6 @@
 ..\output\inet_chksum.o: ..\SX127X\example\Lora_demo.h
 ..\output\inet_chksum.o: ..\User\network\network.h
 ..\output\inet_chksum.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\inet_chksum.o: ..\User\eeprom\bsp_i2c.h
 ..\output\inet_chksum.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\inet_chksum.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\inet_chksum.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

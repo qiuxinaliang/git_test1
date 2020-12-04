@@ -120,7 +120,6 @@
 ..\output\icmp.o: ..\SX127X\example\Lora_demo.h
 ..\output\icmp.o: ..\User\network\network.h
 ..\output\icmp.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\icmp.o: ..\User\eeprom\bsp_i2c.h
 ..\output\icmp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\icmp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\icmp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

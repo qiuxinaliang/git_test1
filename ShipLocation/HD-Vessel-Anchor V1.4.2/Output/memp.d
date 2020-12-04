@@ -120,7 +120,6 @@
 ..\output\memp.o: ..\SX127X\example\Lora_demo.h
 ..\output\memp.o: ..\User\network\network.h
 ..\output\memp.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\memp.o: ..\User\eeprom\bsp_i2c.h
 ..\output\memp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\memp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\memp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

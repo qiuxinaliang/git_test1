@@ -45,7 +45,6 @@
 #include "network.h"
 
 #include "bsp_i2c_ee.h"
-#include "bsp_i2c.h"
 
 #endif // !1
 

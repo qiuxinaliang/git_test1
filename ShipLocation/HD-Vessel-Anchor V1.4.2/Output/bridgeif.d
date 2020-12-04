@@ -122,7 +122,6 @@
 ..\output\bridgeif.o: ..\SX127X\example\Lora_demo.h
 ..\output\bridgeif.o: ..\User\network\network.h
 ..\output\bridgeif.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\bridgeif.o: ..\User\eeprom\bsp_i2c.h
 ..\output\bridgeif.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\bridgeif.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\bridgeif.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

@@ -120,7 +120,6 @@
 ..\output\if_api.o: ..\SX127X\example\Lora_demo.h
 ..\output\if_api.o: ..\User\network\network.h
 ..\output\if_api.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\if_api.o: ..\User\eeprom\bsp_i2c.h
 ..\output\if_api.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\if_api.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\if_api.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

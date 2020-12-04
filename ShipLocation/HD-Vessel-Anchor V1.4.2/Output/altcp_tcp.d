@@ -120,7 +120,6 @@
 ..\output\altcp_tcp.o: ..\SX127X\example\Lora_demo.h
 ..\output\altcp_tcp.o: ..\User\network\network.h
 ..\output\altcp_tcp.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\altcp_tcp.o: ..\User\eeprom\bsp_i2c.h
 ..\output\altcp_tcp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\altcp_tcp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\altcp_tcp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

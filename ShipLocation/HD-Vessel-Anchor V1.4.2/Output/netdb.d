@@ -121,7 +121,6 @@
 ..\output\netdb.o: ..\SX127X\example\Lora_demo.h
 ..\output\netdb.o: ..\User\network\network.h
 ..\output\netdb.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\netdb.o: ..\User\eeprom\bsp_i2c.h
 ..\output\netdb.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\netdb.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\netdb.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

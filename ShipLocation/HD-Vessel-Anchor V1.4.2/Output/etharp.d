@@ -120,7 +120,6 @@
 ..\output\etharp.o: ..\SX127X\example\Lora_demo.h
 ..\output\etharp.o: ..\User\network\network.h
 ..\output\etharp.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\etharp.o: ..\User\eeprom\bsp_i2c.h
 ..\output\etharp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\etharp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\etharp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

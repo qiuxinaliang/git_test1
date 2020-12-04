@@ -115,7 +115,6 @@
 ..\output\ethernetif.o: ..\SX127X\example\Lora_demo.h
 ..\output\ethernetif.o: ..\User\network\network.h
 ..\output\ethernetif.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\ethernetif.o: ..\User\eeprom\bsp_i2c.h
 ..\output\ethernetif.o: ..\LwIP\include\lwip/opt.h
 ..\output\ethernetif.o: ..\User\arch\lwipopts.h
 ..\output\ethernetif.o: ..\LwIP\include\lwip/debug.h

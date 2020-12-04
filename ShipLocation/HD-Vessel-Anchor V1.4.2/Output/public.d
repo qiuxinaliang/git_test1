@@ -115,4 +115,3 @@
 ..\output\public.o: ..\SX127X\example\Lora_demo.h
 ..\output\public.o: ..\User\network\network.h
 ..\output\public.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\public.o: ..\User\eeprom\bsp_i2c.h

@@ -120,7 +120,6 @@
 ..\output\ip4_frag.o: ..\SX127X\example\Lora_demo.h
 ..\output\ip4_frag.o: ..\User\network\network.h
 ..\output\ip4_frag.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\ip4_frag.o: ..\User\eeprom\bsp_i2c.h
 ..\output\ip4_frag.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\ip4_frag.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\ip4_frag.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

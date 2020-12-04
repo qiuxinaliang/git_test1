@@ -115,4 +115,3 @@
 ..\output\sx127x_driver.o: ..\SX127X\example\Lora_demo.h
 ..\output\sx127x_driver.o: ..\User\network\network.h
 ..\output\sx127x_driver.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\sx127x_driver.o: ..\User\eeprom\bsp_i2c.h

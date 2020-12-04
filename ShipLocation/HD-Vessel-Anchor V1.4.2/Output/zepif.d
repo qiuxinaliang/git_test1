@@ -121,7 +121,6 @@
 ..\output\zepif.o: ..\SX127X\example\Lora_demo.h
 ..\output\zepif.o: ..\User\network\network.h
 ..\output\zepif.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\zepif.o: ..\User\eeprom\bsp_i2c.h
 ..\output\zepif.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\zepif.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\zepif.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

@@ -120,7 +120,6 @@
 ..\output\autoip.o: ..\SX127X\example\Lora_demo.h
 ..\output\autoip.o: ..\User\network\network.h
 ..\output\autoip.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\autoip.o: ..\User\eeprom\bsp_i2c.h
 ..\output\autoip.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\autoip.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\autoip.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

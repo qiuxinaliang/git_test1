@@ -120,7 +120,6 @@
 ..\output\timeouts.o: ..\SX127X\example\Lora_demo.h
 ..\output\timeouts.o: ..\User\network\network.h
 ..\output\timeouts.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\timeouts.o: ..\User\eeprom\bsp_i2c.h
 ..\output\timeouts.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\timeouts.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\timeouts.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

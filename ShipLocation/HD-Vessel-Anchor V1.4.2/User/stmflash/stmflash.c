@@ -132,6 +132,7 @@ void STMFLASH_Read(u32 ReadAddr,u32 *pBuffer,u32 NumToRead)
 	}
 }
 
+#if 0
 upgrateInfo_stru upgrateInfo_stru_temp;
 HardwareInfo_Stru HardwareInfo_stru_temp;
 Network_Manage Network_Manage_stru_temp; // 网络参数保存
@@ -236,6 +237,7 @@ void Static_Gloabl_Read(void)
 	STMFLASH_Read(ADDR_FLASH_SECTOR_7,(uint32_t *)&STMFlashReadWrite_Stru_temp,sizeof(STMFlashReadWrite_Stru_temp)/4); 
   memcpy((uint8_t *)&Staticgloabl_stru_temp, (uint8_t *)&STMFlashReadWrite_Stru_temp.Staticgloabl_stru_temp, sizeof(Staticgloabl_stru_temp));
 }
+#endif
 
 
 

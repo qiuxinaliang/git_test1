@@ -1,17 +1,17 @@
 /*
  * @:*********************************************************************************************************: 
  * @Date: 2020-11-03 18:07:17
- * @LastEditTime: 2020-11-19 18:35:39
+ * @LastEditTime: 2020-12-04 14:15:03
  * @**********************************************************************************************************: 
  */
 #include "board.h"
-//#include "./eth/bsp_eth.h" 
-//#include "main.h"
 
 #include <cm_backtrace.h>
 #define u32 uint32_t
 #define HARDWARE_VERSION               "V1.0.0"
 #define SOFTWARE_VERSION               "V0.1.0"
+
+uint8_t DeviceSelfCheckInfo;
 
 static void SystemClock_Config(void);
 static void GPIO_CLK_Init(void);
@@ -35,29 +35,19 @@ void BSP_Init(void)
 	RTC_Init();
   MX_TIM6_Init();
   DEBUG_USART_Config();    /*初始化USART 配置模式为 115200 8-N-1，中断接收*/
-	//test_spi_gpio();
-  //USART3_Lora_Config();
-	
+  DeviceSelfCheckInfo = 1;
+
 	Lora_SPI_Init();
   lora_init(470000000, 20, 9, 7, 1, 0x0005);
-	//sx127xInit(&stting);
 	LED_GPIO_Config();
  
-	//Static_Gloabl_Read();
-	//eeprom_Gpio_init();
 	I2C_EE_Init();
 	HardwareConfigInfo_Handle();
-	//I2C_Test1();
 	//I2C_Test();
-	//AT_24C02_write_data(FLAG_IAP, 0x00);
-	//log_print(DEBUG,("EEPROM = %x\r\n", AT_24C02_read_data(FLAG_IAP)));
-	//timestamp = Staticgloabl_stru_temp.timestamp;
   my_mem_init(SRAMIN);
 	rtc_timestamp = 1604489403;
-  //USART3_For_Lora_QUEUE_INIT(USART3_For_Lora_QUEUE_SIZE);
 	IWDG_Init(IWDG_PRESCALER_64,1000);  	//分频数为4,重载值为1000,溢出时间为2s	
   
-  //cm_backtrace_init("HD-Vessel-Anchor", HARDWARE_VERSION, SOFTWARE_VERSION);     /* CmBacktrace initialize */
   log_print(DEBUG,("name = HD-Vessel-Anchor, HARDWARE_VERSION  = %s, SOFTWARE_VERSION = %s", HARDWARE_VERSION, SOFTWARE_VERSION));
 }
 
@@ -69,6 +59,7 @@ void BSP_Init(void)
 *	返 回 值: 无
 *********************************************************************************************************
 */
+#if 0
 extern upgrateInfo_stru upgrateInfo_stru_temp;
 extern HardwareInfo_Stru HardwareInfo_stru_temp;
 extern Network_Manage Network_Manage_stru_temp; // 网络参数保存
@@ -141,6 +132,8 @@ static void Network_Manage_Init(void)
   Network_Manage_stru_temp.Engineipaddress[3] = 100;
   Network_Manage_stru_temp.EnginePort = 6009;
 }
+#endif
+
 
 /*
 *********************************************************************************************************

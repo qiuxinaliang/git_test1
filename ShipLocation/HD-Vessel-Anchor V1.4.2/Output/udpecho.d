@@ -115,7 +115,6 @@
 ..\output\udpecho.o: ..\SX127X\example\Lora_demo.h
 ..\output\udpecho.o: ..\User\network\network.h
 ..\output\udpecho.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\udpecho.o: ..\User\eeprom\bsp_i2c.h
 ..\output\udpecho.o: ..\LwIP\include\lwip/opt.h
 ..\output\udpecho.o: ..\User\arch\lwipopts.h
 ..\output\udpecho.o: ..\LwIP\include\lwip/debug.h

@@ -51,7 +51,7 @@ static void udpecho_thread(void *arg)
     }
     udp_addr.sin_family = AF_INET;
     udp_addr.sin_addr.s_addr = htonl(IPADDR_Local);//192.168.1.104)  IPADDR_ANY IPADDR_Remote  ipaddr
-    udp_addr.sin_port = htons(Network_Manage_stru_temp.AnchorPort);
+    udp_addr.sin_port = htons(E_Network_Manage_stru_temp.AnchorPort);
     memset(&(udp_addr.sin_zero), 0, sizeof(udp_addr.sin_zero));
     if (bind(sock, (struct sockaddr *)&udp_addr, sizeof(struct sockaddr)) == -1)
     {

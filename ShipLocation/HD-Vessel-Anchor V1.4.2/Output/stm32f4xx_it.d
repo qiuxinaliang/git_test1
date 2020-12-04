@@ -114,4 +114,3 @@
 ..\output\stm32f4xx_it.o: ..\SX127X\example\Lora_demo.h
 ..\output\stm32f4xx_it.o: ..\User\network\network.h
 ..\output\stm32f4xx_it.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\stm32f4xx_it.o: ..\User\eeprom\bsp_i2c.h

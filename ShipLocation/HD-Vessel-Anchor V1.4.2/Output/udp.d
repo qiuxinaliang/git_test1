@@ -120,7 +120,6 @@
 ..\output\udp.o: ..\SX127X\example\Lora_demo.h
 ..\output\udp.o: ..\User\network\network.h
 ..\output\udp.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\udp.o: ..\User\eeprom\bsp_i2c.h
 ..\output\udp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\output\udp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\limits.h
 ..\output\udp.o: D:\tools\keil\ARM\ARMCC\Bin\..\include\ctype.h

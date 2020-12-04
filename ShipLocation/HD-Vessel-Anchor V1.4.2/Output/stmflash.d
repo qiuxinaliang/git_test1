@@ -115,4 +115,3 @@
 ..\output\stmflash.o: ..\SX127X\example\Lora_demo.h
 ..\output\stmflash.o: ..\User\network\network.h
 ..\output\stmflash.o: ..\User\eeprom\bsp_i2c_ee.h
-..\output\stmflash.o: ..\User\eeprom\bsp_i2c.h

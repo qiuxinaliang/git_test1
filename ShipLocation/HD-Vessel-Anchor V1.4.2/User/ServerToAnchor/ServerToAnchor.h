@@ -1,7 +1,7 @@
 /*
  * @:*********************************************************************************************************: 
  * @Date: 2020-11-04 15:41:21
- * @LastEditTime: 2020-11-26 10:23:35
+ * @LastEditTime: 2020-12-04 14:04:26
  * @**********************************************************************************************************: 
  */
 #ifndef __SERVERTOANCHOR__H__
@@ -115,7 +115,7 @@ typedef enum
 #define UpdateTimeReqReponse 0x43
 #define PowerOnMessageReponse 0x02
 #define ExceptionTaskSuspend 0x44
-// 协议框架起始标志 + 控制单元
+/* 协议框架起始标志 + 控制单元 */
 #pragma pack(1)
 typedef struct
 {
@@ -128,7 +128,7 @@ typedef struct
 }ProtocolFrameCtrlUint;
 #pragma pack()
 
-// 协议框架中的校验和 + 结束标志
+/* 协议框架中的校验和 + 结束标志 */
 #pragma pack(1)
 typedef struct
 {
@@ -137,7 +137,7 @@ typedef struct
 }ProtocolFrameEnderUint;
 #pragma pack()
 
-// 协议框架中的开机信息结构体
+/* 协议框架中的开机信息结构体 */
 #pragma pack(1)
 typedef struct
 {
@@ -163,7 +163,7 @@ typedef struct
 }DevicePowerOn_Stru;
 #pragma pack()
 
-// 开机信息服务器响应结构体
+/* 开机信息服务器响应结构体 */
 #pragma pack(1)
 typedef struct
 {
@@ -179,7 +179,7 @@ typedef struct
 }Response_Stru;
 #pragma pack()
 
-// 协议框架中的服务器下发配置
+/* 协议框架中的服务器下发配置 */
 #pragma pack(1)
 typedef struct
 {
@@ -209,7 +209,7 @@ typedef struct
 }ServerSendConfig_Stru;
 #pragma pack()
 
-// 设备上报心跳包
+/* 设备上报心跳包 */
 #pragma pack(1)
 typedef struct
 {
@@ -227,7 +227,7 @@ typedef struct
 }AnchorSendHeart_Stru;
 #pragma pack()
 
-// 服务器控制基站
+/* 服务器控制基站 */
 #pragma pack(1)
 typedef struct
 {
@@ -241,7 +241,7 @@ typedef struct
 }ServerCtrlAnchor_Stru;
 #pragma pack()
 
-// 基站时间更新请求
+/* 基站时间更新请求 */
 #pragma pack(1)
 typedef struct
 {
@@ -253,7 +253,7 @@ typedef struct
 }UpdateTimeRequest_Stru;       
 #pragma pack()
 
-// 网络接收数据结构体
+/* 网络接收数据结构体 */
 #pragma pack(1)
 typedef struct
 {
@@ -262,7 +262,7 @@ typedef struct
 }NetworkRecvData_Stru;
 #pragma pack()
 
-// 设备响应服务器获取配置信息请求
+/* 设备响应服务器获取配置信息请求 */
 #pragma pack(1)
 typedef struct
 {
@@ -302,7 +302,7 @@ typedef struct
 }DevResponConfigInfo_Stru;
 #pragma pack()
 
-// 服务器请求设备信息结构体
+/* 服务器请求设备信息结构体 */
 #pragma pack(1)
 typedef struct
 {
