@@ -1,5 +1,12 @@
+/*
+ * @:*********************************************************************************************************: 
+ * @Date: 2020-12-07 16:14:03
+ * @LastEditTime: 2020-12-07 16:44:17
+ * @**********************************************************************************************************: 
+ */
 #include "sx127x_hal.h"
 
+extern SPI_HandleTypeDef hspi4;
 void Soft_delay_ms(uint16_t time)
 {    
    uint16_t i=0;  
@@ -17,7 +24,8 @@ void SX1276HALInit( void )
 	__HAL_RCC_GPIOD_CLK_ENABLE();
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 	__HAL_RCC_GPIOB_CLK_ENABLE();
-	HAL_GPIO_WritePin(Lora_SPI1_CS_PORT, Lora_SPI1_CS_PIN, GPIO_PIN_SET );
+	__HAL_RCC_GPIOE_CLK_ENABLE();
+	HAL_GPIO_WritePin(Lora_SPI_CS_PORT, Lora_SPI_CS_PIN, GPIO_PIN_SET );
 	Lora_SPI_Init();
 	
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
@@ -51,7 +59,7 @@ uint8_t SpiInOut( uint8_t outData )
 {
 	uint8_t temp = 0;
     /* Send SPIy data */
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t *)&outData, (uint8_t *)&temp, 1, HAL_MAX_DELAY);
+	HAL_SPI_TransmitReceive(&hspi4, (uint8_t *)&outData, (uint8_t *)&temp, 1, HAL_MAX_DELAY);
 	//HAL_SPI_Transmit(&hspi1, (uint8_t *)&outData, 1, HAL_MAX_DELAY);
 	//HAL_SPI_Receive(&hspi1, (uint8_t *)&temp, 1, HAL_MAX_DELAY);
   return temp;
@@ -60,8 +68,7 @@ uint8_t SpiInOut( uint8_t outData )
 
 void SpiNSSEnable( uint8_t status )
 {
-  HAL_GPIO_WritePin(Lora_SPI1_CS_PORT, Lora_SPI1_CS_PIN, status );
-	
+  HAL_GPIO_WritePin(Lora_SPI_CS_PORT, Lora_SPI_CS_PIN, status );
 }
 
 

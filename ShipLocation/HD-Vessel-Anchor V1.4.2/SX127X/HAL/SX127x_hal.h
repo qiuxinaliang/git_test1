@@ -1,7 +1,7 @@
 /*
  * @:*********************************************************************************************************: 
  * @Date: 2020-11-16 10:31:55
- * @LastEditTime: 2020-11-17 14:37:14
+ * @LastEditTime: 2020-12-07 16:37:11
  * @**********************************************************************************************************: 
  */
 #ifndef __SX127X_HAL_H__
@@ -10,14 +10,14 @@
 
 #include "common.h"
 
-#define RESET_IOPORT                                GPIOD
-#define RESET_PIN                                   GPIO_PIN_7
+#define RESET_IOPORT                                GPIOE
+#define RESET_PIN                                   GPIO_PIN_10
 
-#define DIO0_IOPORT                                 GPIOD
-#define DIO0_PIN                                    GPIO_PIN_5
+#define DIO0_IOPORT                                 GPIOE
+#define DIO0_PIN                                    GPIO_PIN_9
 
-#define DIO1_IOPORT                                 GPIOD
-#define DIO1_PIN                                    GPIO_PIN_8
+#define DIO1_IOPORT                                 GPIOA
+#define DIO1_PIN                                    GPIO_PIN_11
 
 #define DIO3_IOPORT                                 GPIOD
 #define DIO3_PIN                                    GPIO_PIN_9
