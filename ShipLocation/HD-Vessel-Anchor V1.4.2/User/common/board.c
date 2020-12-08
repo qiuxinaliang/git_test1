@@ -227,11 +227,6 @@ static void HardwareConfigInfo_Handle(void)
   log_print(DEBUG,("LocalPort = %d, CenterPort = %d, EnginePort = %d", E_Network_Manage_stru_temp.AnchorPort, E_Network_Manage_stru_temp.CenterPort,
 						E_Network_Manage_stru_temp.EnginePort));
 		
-	
-	
-	
-	
-	
 	#if 0
   upgrateInfo_Read();
 	//log_print(DEBUG, ("UpgradeFile_Total = %d\r\n",upgrateInfo_stru_temp.SoftwareVersion[0]));

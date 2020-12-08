@@ -27,6 +27,7 @@ void Usr_NetworkRecvData_Handle(void)
 	ProtocolFrameCtrlUint ProtocolFrameCtrlUint_temp;
 	while(1)
 	{
+		#if 1
     if(NetworkRecvData_Stru_temp.NetworkRecvData_Len > 0)
     {
       log_print(DEBUG,("net\r\n"));
@@ -82,6 +83,7 @@ void Usr_NetworkRecvData_Handle(void)
 			}
 		  NetworkRecvData_Stru_temp.NetworkRecvData_Len = 0;
     }
+		#endif
 		JianZhang_LoraData_Handle();
 		vTaskDelay(10);
 	}

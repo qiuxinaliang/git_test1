@@ -45,6 +45,7 @@ void JianZhang_LoraData_Handle(void)
 		case 0:
 			#if 1
 			Calibration_temp = UDP_public_Sum_check((uint8_t *)JianZhang_RxBuf, DataPacket_len -1);
+			//USART1_For_Debug_tx(SendData_len, (uint8_t *)&JianZhang_RxBuf);
 			if( Calibration_temp == JianZhang_RxBuf[DataPacket_len  -1])
 			{
 				ProtocolFrameCtrlUint_temp.DataLen = DataPacket_len;
