@@ -77,7 +77,6 @@ typedef struct
 	uint8_t DeviceType;		//软件升级写入地址
 	uint16_t DataLen;
 	uint8_t cmd_Unit;
-	//T_upgradePacketData upgradePacketData;
 	uint8_t upgradePacketData[1024];
 	uint8_t CalibrationValue;
 	uint16_t ProtocolEnder;
@@ -106,7 +105,4 @@ void UDP_SendGetUpgradePacketReq(uint8_t n);
 uint8_t UDP_RecvData_Handle(void);
 uint8_t UDP_public_Sum_check(uint8_t *str, uint32_t str_length);
 void OTA_StringCopy(uint8_t *From_buff, uint8_t *To_buff, uint16_t Str_Len, uint8_t UpgradePacket_n);
-int Upgrade_Query(void);
-void Upgrade_CleanFlag(void);
-
 #endif

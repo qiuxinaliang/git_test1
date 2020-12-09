@@ -48,6 +48,7 @@ void BSP_Init(void)
 	rtc_timestamp = 1604489403;
 	IWDG_Init(IWDG_PRESCALER_64,1000);  	//分频数为4,重载值为1000,溢出时间为2s	
   
+	cm_backtrace_init("HD-Vessel-Anchor", HARDWARE_VERSION, SOFTWARE_VERSION);
   log_print(DEBUG,("name = HD-Vessel-Anchor, HARDWARE_VERSION  = %s, SOFTWARE_VERSION = %s", HARDWARE_VERSION, SOFTWARE_VERSION));
 }
 

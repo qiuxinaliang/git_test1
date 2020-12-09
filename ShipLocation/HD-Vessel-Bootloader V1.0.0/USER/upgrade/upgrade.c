@@ -23,7 +23,7 @@ __asm void MSR_MSP(u32 addr)
 /**
  * @:*********************************************************************************************************: 
  * @函 数 名: BootLoad_to_App
-* @功能说明: 跳转到应用程序
+ * @功能说明: 跳转到应用程序
  * @形    参: AppAddr：跳转地址
  * @返 回 值: 无
  * @**********************************************************************************************************: 
@@ -43,7 +43,6 @@ void BootLoad_to_App(uint32_t AppAddr)
 		__HAL_RCC_TIM6_CLK_DISABLE();
 		HAL_NVIC_DisableIRQ(TIM6_DAC_IRQn);
 		
-		
 		__set_PRIMASK(1);	
 		jump2app = (iapfun) * (vu32 *)(AppAddr + 4);			
 		MSR_MSP(*(vu32 *)AppAddr);							 
@@ -56,9 +55,14 @@ void BootLoad_to_App(uint32_t AppAddr)
 }
 
 u32 iapbuf[512]; 	//2K字节缓存  
-//appxaddr:应用程序的起始地址
-//appbuf:应用程序CODE.
-//appsize:应用程序大小(字节).
+/**
+ * @:*********************************************************************************************************: 
+ * @函 数 名: iap_write_appbin
+ * @功能说明: bin文件写入flash
+ * @形    参: appxaddr:应用程序的起始地址, appbuf:应用程序CODE, appsize:应用程序大小(字节)
+ * @返 回 值: 无
+ * @**********************************************************************************************************: 
+ */
 void iap_write_appbin(u32 appxaddr,u8 *appbuf,u32 appsize)
 {
 	u32 t;
@@ -66,22 +70,22 @@ void iap_write_appbin(u32 appxaddr,u8 *appbuf,u32 appsize)
 	u32 temp;
 	u32 fwaddr = appxaddr;//当前写入的地址
 	u8 *dfu=appbuf;
-	for(t=0;t<appsize;t+=4)
+	for(t = 0;t < appsize;t += 4)
 	{						   
-		temp=(u32)dfu[3]<<24;   
-		temp|=(u32)dfu[2]<<16;    
-		temp|=(u32)dfu[1]<<8;
-		temp|=(u32)dfu[0];	  
-		dfu+=4;//偏移4个字节
-		iapbuf[i++]=temp;	    
-		if(i==512)
+		temp = (u32)dfu[3]<<24;   
+		temp |= (u32)dfu[2]<<16;    
+		temp |= (u32)dfu[1]<<8;
+		temp |= (u32)dfu[0];	  
+		dfu += 4;//偏移4个字节
+		iapbuf[i++] = temp;	    
+		if(i == 512)
 		{
-			i=0; 
-			STMFLASH_Write(fwaddr,iapbuf,512);
-			fwaddr+=2048;//偏移2048  512*4=2048
+			i = 0; 
+			STMFLASH_Write(fwaddr, iapbuf, 512);
+			fwaddr += 2048;//偏移2048  512*4=2048
 		}
 	} 
-	if(i)STMFLASH_Write(fwaddr,iapbuf,i);//将最后的一些内容字节写进去.  
+	if(i) STMFLASH_Write(fwaddr,iapbuf,i);//将最后的一些内容字节写进去.  
 }
 
 /**
@@ -109,23 +113,14 @@ void UDP_SendUpgradeReq(void)
 		UpgradeReq_Stru_temp->DeviceType = 0x10;
 		UpgradeReq_Stru_temp->DataLen = bswap_16(0x08);
 		UpgradeReq_Stru_temp->cmd_Unit = 0xC0;
-		//UpgradeReq_Stru_temp->HardwareVersion = bswap_32(0x00010001);
 		UpgradeReq_Stru_temp->HardwareVersion[0] = 0x01;
 		UpgradeReq_Stru_temp->HardwareVersion[1] = 0x00;
 		UpgradeReq_Stru_temp->HardwareVersion[2] = 0x01;
-		//UpgradeReq_Stru_temp->SoftVersion = bswap_32(0x00010000);
 		UpgradeReq_Stru_temp->SoftVersion[0] = 0x00;
 		UpgradeReq_Stru_temp->SoftVersion[1] = 0x00;
 		UpgradeReq_Stru_temp->SoftVersion[2] = 0x01;
 		UpgradeReq_Stru_temp->CalibrationValue = UDP_public_Sum_check(((uint8_t *)UpgradeReq_Stru_temp) + 3, sizeof(UpgradeReq_Stru) - 6);
 		UpgradeReq_Stru_temp->ProtocolEnder = bswap_16(0x3535);
-		log_print(DEBUG, ("recv2\r\n"));
-		pData = (uint8_t *)UpgradeReq_Stru_temp;
-		for(int i = 0; i <= sizeof(UpgradeResponse_Stru); i++)
-		{
-			 printf("%02x", pData[i]);
-		}
-		log_print(DEBUG, ("\r\n"));
 		
 		udp_UWB_senddata(udppcb, (uint8_t *)UpgradeReq_Stru_temp, sizeof(UpgradeReq_Stru));
 		lwip_periodic_handle();
@@ -201,12 +196,6 @@ uint8_t UDP_RecvData_Handle(void)
 		if((udp_demo_recvbuf[0] == 0x24) &&((udp_demo_recvbuf[1] == 0x24)))
 		{
 			memcpy((uint8_t *)UpgradeResponse_Stru_temp, udp_demo_recvbuf, sizeof(UpgradeResponse_Stru));
-			log_print(DEBUG, ("recr_udp\r\n"));
-			for(int i = 0; i <= sizeof(udp_demo_recvbuf); i++)
-			{
-				 //printf("%02x", udp_demo_recvbuf[i]);
-			}
-			//log_print(DEBUG, ("\r\n"));
 		}
 		else
 			memset((uint8_t *)UpgradeResponse_Stru_temp, 0, sizeof(UpgradeResponse_Stru));
@@ -217,7 +206,7 @@ uint8_t UDP_RecvData_Handle(void)
 			case Cmd_UpgradeStart:
 			{
 				// 进行数据包校验
-				CalibrationValue_temp = UDP_public_Sum_check(((uint8_t *)UpgradeResponse_Stru_temp) + 3, sizeof(UpgradeResponse_Stru) - 7);
+				CalibrationValue_temp = UDP_public_Sum_check(((uint8_t *)UpgradeResponse_Stru_temp) + 3, sizeof(UpgradeResponse_Stru) - 6);
 				if(CalibrationValue_temp == UpgradeResponse_Stru_temp->CalibrationValue)
 				{
 					UpgradeFile_Info_t.UpgradePacket_Total = UpgradeResponse_Stru_temp->UpgradePacket_Total;
@@ -225,17 +214,7 @@ uint8_t UDP_RecvData_Handle(void)
 					UpgradeFile_Info_t.CalibrationValue = UpgradeResponse_Stru_temp->FileTotal_CalibrationValue;
 					memcpy((uint8_t *)&E_Version_stru_temp.HardwareVersion, (uint8_t *)UpgradeResponse_Stru_temp->HardwareVersion, 3);
 					memcpy((uint8_t *)&E_Version_stru_temp.SoftwareVersion, (uint8_t *)UpgradeResponse_Stru_temp->SoftVersion, 3);
-					log_print(DEBUG, ("UpgradeFile_Total = %d\r\n",E_Version_stru_temp.SoftwareVersion[0]));
-					log_print(DEBUG, ("UpgradeFile_Total = %d\r\n",E_Version_stru_temp.SoftwareVersion[1]));
-					log_print(DEBUG, ("UpgradeFile_Total = %d\r\n",E_Version_stru_temp.SoftwareVersion[2]));
 					EE_Version_Write();
-					//upgrateInfo_stru_temp.upgrate_mark = 0x01;
-					//upgrateHardSoft_Write();
-					//upgrateInfo_Write();
-					//UpgradeFile_Info_t.CalibrationValue = 0xfc;
-					log_print(DEBUG, ("UpgradeFile_Total = %d\r\n",UpgradeFile_Info_t.UpgradePacket_Total));
-					log_print(DEBUG, ("UpgradeFile_Bytes = %d\r\n",UpgradeFile_Info_t.UpgradeFile_Bytes));
-					log_print(DEBUG, ("CalibrationValue = %d\r\n",UpgradeFile_Info_t.CalibrationValue));
 					#if 1
 					UpgradeFileBuf = (uint8_t *)mymalloc(SRAMIN, UpgradeFile_Info_t.UpgradeFile_Bytes);
 					if(UpgradeFileBuf != NULL)
@@ -244,7 +223,7 @@ uint8_t UDP_RecvData_Handle(void)
 					}
 					else
 					{
-						log_print(DEBUG, ("UpgradeFileBuf malloc fail\r\n"));
+						log_print(ERR, ("UpgradeFileBuf malloc fail\r\n"));
 					}
 					#endif
 					delay_ms(100);
@@ -259,16 +238,16 @@ uint8_t UDP_RecvData_Handle(void)
 			}
 			case Cmd_UpgradePacket:
 			{
-				log_print(DEBUG, ("Cmd_UpgradePacket\r\n"));
+				//log_print(DEBUG, ("Cmd_UpgradePacket\r\n"));
 				UpgradePcketData_Stru_temp = (UpgradePcketData_Stru *)mymalloc(SRAMIN, sizeof(UpgradePcketData_Stru));
 				if(UpgradePcketData_Stru_temp != NULL)
 				{
 					memset((uint8_t *)UpgradePcketData_Stru_temp, 0, sizeof(UpgradePcketData_Stru));
 					memcpy((uint8_t *)UpgradePcketData_Stru_temp, udp_demo_recvbuf, sizeof(UpgradePcketData_Stru));
 		
-					CalibrationValue_temp = UDP_public_Sum_check(((uint8_t *)UpgradePcketData_Stru_temp) + 3, sizeof(UpgradePcketData_Stru) - 1024 + PacketData_len - 7);
-				  log_print(DEBUG, ("CalibrationValue = %d\r\n",UpgradePcketData_Stru_temp->CalibrationValue));
-					log_print(DEBUG, ("recvbufCalibrationValue = %d\r\n",udp_demo_recvbuf[sizeof(UpgradePcketData_Stru) - 1024 + PacketData_len - 3]));
+					CalibrationValue_temp = UDP_public_Sum_check(((uint8_t *)UpgradePcketData_Stru_temp) + 3, sizeof(UpgradePcketData_Stru) - 1024 + PacketData_len - 6);
+				  //log_print(DEBUG, ("CalibrationValue = %d\r\n",UpgradePcketData_Stru_temp->CalibrationValue));
+					//log_print(DEBUG, ("recvbufCalibrationValue = %d\r\n",udp_demo_recvbuf[sizeof(UpgradePcketData_Stru) - 1024 + PacketData_len - 3]));
 					if((CalibrationValue_temp == UpgradePcketData_Stru_temp->CalibrationValue)
 						 || (CalibrationValue_temp == udp_demo_recvbuf[sizeof(UpgradePcketData_Stru) - 1024 + PacketData_len - 3]))
 					{
@@ -282,8 +261,7 @@ uint8_t UDP_RecvData_Handle(void)
 				}
 				else
 				{
-					log_print(DEBUG, ("UpgradePcketData_Stru malloc fail\r\n"));
-				
+					log_print(ERR, ("UpgradePcketData_Stru malloc fail\r\n"));
 				}
 				UpgradePacket_n++;
 				if(UpgradePacket_n < UpgradeFile_Info_t.UpgradePacket_Total)
@@ -309,17 +287,12 @@ uint8_t UDP_RecvData_Handle(void)
 						UDP_SendGetUpgradePacketReq(UpgradePacket_n + 1);
 					}
 				}
-				else if(UpgradePacket_n == (UpgradeFile_Info_t.UpgradePacket_Total + 1))
-				{
-					//UDP_SendGetUpgradePacketReq(UpgradePacket_n);  //发送第一个数据包请求
-				}
 				myfree(SRAMIN, UpgradePcketData_Stru_temp); 
-				//delay_ms(100);
 				break;
 			}
 			default:
 			{
-				log_print(DEBUG, ("Invalid data\r\n"));
+				log_print(ERR, ("Invalid data\r\n"));
 				break;
 			}
 		}
@@ -346,13 +319,10 @@ uint8_t UDP_public_Sum_check(uint8_t *str, uint32_t str_length)
   int i = 0;
   
   SumCheck_Value = str[0];
-	//printf("%02x",str[0]);
-  for(i = 1; i <= str_length; i++)
+  for(i = 1; i < str_length; i++)
   {
-		 //printf("%02x",str[i]);
-     SumCheck_Value += str[i];
+    SumCheck_Value += str[i];
   }
-  log_print(DEBUG, ("\r\nXorCheck_Value = %x\r\n",  SumCheck_Value));
   return SumCheck_Value;
 }
 
@@ -384,43 +354,6 @@ static inline uint32_t bswap_32(uint32_t x)
 {
 	x = ((x << 8) &0xFF00FF00) | ((x >> 8) &0x00FF00FF);
 	return (x >> 16) | (x << 16);
-}
-
-/**
- * @:*********************************************************************************************************: 
- * @函 数 名: Upgrade_StatusWrite
- * @功能说明: 升级状态写入
- * @形    参: 无
- * @返 回 值: 返回是否需要升级
- * @**********************************************************************************************************: 
- */
-int Upgrade_StatusWrite()   	
-{
-	char test[50] = "UpgradeFlag write to flash\n";
-	STMFLASH_Write(ADDR_FLASH_SECTOR_7 ,(uint32_t *)&UpgradeFlag,sizeof(uint32_t)/4);//Ð´ÈëÒ»¸ö×Ö 
-	log_print( DEBUG, ("UpgradeFlag write to flash \r\n"));
-	//STMFLASH_Write(WriteAddr,&WriteData,1);//Ð´ÈëÒ»¸ö×Ö 
-}
-/**
- * @:*********************************************************************************************************: 
- * @函 数 名: Upgrade_Query
- * @功能说明: 升级标志查询函数
- * @形    参: 无
- * @返 回 值: 返回是否需要升级
- * @**********************************************************************************************************: 
- */
-int Upgrade_Query(void)   	
-{
-	uint32_t read_temp = 0,write_temp = 0; 
-	STMFLASH_Read(ADDR_FLASH_SECTOR_7,(uint32_t *)&read_temp,sizeof(uint32_t)/4); 
-	log_print( DEBUG, ("read UpgradeFlag\r\n"));
-	return read_temp;
-}
-
-void Upgrade_CleanFlag(void)
-{
-	uint32_t write_temp = 0; 
-	STMFLASH_Write(ADDR_FLASH_SECTOR_7 ,(uint32_t *)&write_temp,sizeof(uint32_t)/4);//Ð´ÈëÒ»¸ö×Ö 
 }
 
 

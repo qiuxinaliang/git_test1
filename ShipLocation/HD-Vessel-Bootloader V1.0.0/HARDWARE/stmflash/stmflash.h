@@ -91,12 +91,4 @@ extern Network_Manage Network_Manage_temp; // 网络参数保存
 u32 STMFLASH_ReadWord(u32 faddr);		  	//读出字  
 void STMFLASH_Write(u32 WriteAddr,u32 *pBuffer,u32 NumToWrite);		//从指定地址开始写入指定长度的数据
 void STMFLASH_Read(u32 ReadAddr,u32 *pBuffer,u32 NumToRead);   		//从指定地址开始读出指定长度的数据
-void upgrateHardSoft_Write(void);
-void upgrateInfo_Write(void); 
-void upgrateInfo_Read(void);
-void AnchorWorkMode_Write(void);  
-void PowerOnType_Write(void);  
-void HardwareInfo_Read(void);
-void Network_Manage_Write();
-void Network_Manage_Read(void);
 #endif

@@ -397,11 +397,6 @@
               <FilePath>.\system_stm32f4xx.c</FilePath>
             </File>
             <File>
-              <FileName>DistanceHandle.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\DistanceHandle\DistanceHandle.c</FilePath>
-            </File>
-            <File>
               <FileName>upgrade.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\upgrade\upgrade.c</FilePath>
@@ -806,11 +801,6 @@
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\usart\usart.c</FilePath>
             </File>
-            <File>
-              <FileName>myqueue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SYSTEM\myqueue\myqueue.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -830,11 +820,6 @@
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\gpio\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\spi\spi.c</FilePath>
             </File>
             <File>
               <FileName>stmflash.c</FileName>
@@ -1075,41 +1060,6 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>..\readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>libdw1000</GroupName>
-          <Files>
-            <File>
-              <FileName>dw1000Api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Libdw1000\dw1000Api.c</FilePath>
-            </File>
-            <File>
-              <FileName>dwOps.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Libdw1000\dwOps.c</FilePath>
-            </File>
-            <File>
-              <FileName>dwParameter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Libdw1000\dwParameter.c</FilePath>
-            </File>
-            <File>
-              <FileName>libdw1000.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Libdw1000\libdw1000.c</FilePath>
-            </File>
-            <File>
-              <FileName>libdw1000Reg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Libdw1000\libdw1000Reg.c</FilePath>
-            </File>
-            <File>
-              <FileName>libdw1000Spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Libdw1000\libdw1000Spi.c</FilePath>
             </File>
           </Files>
         </Group>

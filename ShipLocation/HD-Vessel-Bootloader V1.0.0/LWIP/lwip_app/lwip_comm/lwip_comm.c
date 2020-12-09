@@ -74,15 +74,16 @@ void lwip_comm_mem_free(void)
 //lwip 默认IP设置
 //lwipx:lwip控制结构体指针
 extern Network_Manage Network_Manage_stru_temp; // 网络参数保存
+extern E_Network_Manage_stru E_Network_Manage_stru_temp;
 void lwip_comm_default_ip_set(__lwip_dev *lwipx)
 {
 	u32 sn0;
 	sn0=*(vu32*)(0x1FFF7A10);//获取STM32的唯一ID的前24位作为MAC地址后三字节
 	//默认远端IP为:192.168.1.100
-	lwipx->remoteip[0] = Network_Manage_stru_temp.remoteip[0];	
-	lwipx->remoteip[1] = Network_Manage_stru_temp.remoteip[1];
-	lwipx->remoteip[2] = Network_Manage_stru_temp.remoteip[2];
-	lwipx->remoteip[3] = Network_Manage_stru_temp.remoteip[3];
+	lwipx->remoteip[0] = E_Network_Manage_stru_temp.Centeripaddress[0];	
+	lwipx->remoteip[1] = E_Network_Manage_stru_temp.Centeripaddress[1];
+	lwipx->remoteip[2] = E_Network_Manage_stru_temp.Centeripaddress[2];
+	lwipx->remoteip[3] = E_Network_Manage_stru_temp.Centeripaddress[3];
 	//MAC地址设置(高三字节固定为:2.0.0,低三字节用STM32唯一ID)
 	lwipx->mac[0]=2;//高三字节(IEEE称之为组织唯一ID,OUI)地址固定为:2.0.0
 	lwipx->mac[1]=0;
@@ -91,20 +92,20 @@ void lwip_comm_default_ip_set(__lwip_dev *lwipx)
 	lwipx->mac[4]=(sn0>>8)&0XFFF;
 	lwipx->mac[5]=sn0&0XFF; 
 	//默认本地IP为:192.168.1.30
-	lwipx->ip[0] = Network_Manage_stru_temp.ip[0];	
-	lwipx->ip[1] = Network_Manage_stru_temp.ip[1];
-	lwipx->ip[2] = Network_Manage_stru_temp.ip[2];
-	lwipx->ip[3] = Network_Manage_stru_temp.ip[3];
+	lwipx->ip[0] = E_Network_Manage_stru_temp.Anchoripaddress[0];	
+	lwipx->ip[1] = E_Network_Manage_stru_temp.Anchoripaddress[1];
+	lwipx->ip[2] = E_Network_Manage_stru_temp.Anchoripaddress[2];
+	lwipx->ip[3] = E_Network_Manage_stru_temp.Anchoripaddress[3];
 	//默认子网掩码:255.255.255.0
-	lwipx->netmask[0] = Network_Manage_stru_temp.Subnetmask[0];	
-	lwipx->netmask[1] = Network_Manage_stru_temp.Subnetmask[1];
-	lwipx->netmask[2] = Network_Manage_stru_temp.Subnetmask[2];
-	lwipx->netmask[3] = Network_Manage_stru_temp.Subnetmask[3];
+	lwipx->netmask[0] = E_Network_Manage_stru_temp.Subnetmask[0];	
+	lwipx->netmask[1] = E_Network_Manage_stru_temp.Subnetmask[1];
+	lwipx->netmask[2] = E_Network_Manage_stru_temp.Subnetmask[2];
+	lwipx->netmask[3] = E_Network_Manage_stru_temp.Subnetmask[3];
 	//默认网关:192.168.1.1
-	lwipx->gateway[0] = Network_Manage_stru_temp.Gateway[0];	
-	lwipx->gateway[1] = Network_Manage_stru_temp.Gateway[1];
-	lwipx->gateway[2] = Network_Manage_stru_temp.Gateway[2];
-	lwipx->gateway[3] = Network_Manage_stru_temp.Gateway[3];	
+	lwipx->gateway[0] = E_Network_Manage_stru_temp.Gateway[0];	
+	lwipx->gateway[1] = E_Network_Manage_stru_temp.Gateway[1];
+	lwipx->gateway[2] = E_Network_Manage_stru_temp.Gateway[2];
+	lwipx->gateway[3] = E_Network_Manage_stru_temp.Gateway[3];	
 	lwipx->dhcpstatus=0;//没有DHCP	
 } 
 
@@ -115,7 +116,7 @@ void lwip_comm_default_ip_set(__lwip_dev *lwipx)
 //      3,网卡添加失败.
 u8 lwip_comm_init(void)
 {
-    u8 retry=0;
+  u8 retry=0;
 	struct netif *Netif_Init_Flag;		//调用netif_add()函数时的返回值,用于判断网络初始化是否成功
 	struct ip_addr ipaddr;  			//ip地址
 	struct ip_addr netmask; 			//子网掩码

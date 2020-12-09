@@ -287,7 +287,7 @@ void DeviceResponseHeart_Handle(void)
       Count_temp++;
       SemaphoreTime_cnt++;
     }
-    if(Count_temp >= 5)     // 如何10s中服务器和基站都未进行通行，则发送心跳包
+    if(Count_temp >= 30)     // 如何60s中服务器和基站都未进行通行，则发送心跳包
     {
       Count_temp = 0;
 			//Network_Communciton_Flag = 0;
@@ -297,7 +297,7 @@ void DeviceResponseHeart_Handle(void)
         ret = xSemaphoreGive(CountSemaphore);//释放计数型信号量
         if(ret == pdFALSE)
         {
-          log_print(DEBUG,("SemaphoreGive Fail\r\n"));
+          log_print(ERR,("SemaphoreGive Fail\r\n"));
         }
       }
       semavalue = uxSemaphoreGetCount(CountSemaphore); 	//获取数值信号量值
@@ -329,7 +329,7 @@ void DeviceResponseHeart_Handle(void)
 		HAL_RTC_GetDate(&RTC_Handler,&RTC_DateStruct,RTC_FORMAT_BIN);
     rtc_timestamp = time2Stamp(RTC_DateStruct, RTC_TimeStruct);
 		//log_print(DEBUG,("rtc_timestamp = %d\r\n", rtc_timestamp));
-    
+    HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_GPIO_PIN);
     vTaskDelay(1000);
   }
 }

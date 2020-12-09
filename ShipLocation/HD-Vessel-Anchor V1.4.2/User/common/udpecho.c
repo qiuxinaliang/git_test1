@@ -88,6 +88,7 @@ static void udpecho_thread(void *arg)
         vTaskDelay(10);
         HAL_GPIO_WritePin(LED_GPIO_PORT, LED_GPIO_PIN, GPIO_PIN_SET);
         vTaskDelay(20);
+				HAL_GPIO_WritePin(LED_GPIO_PORT, LED_GPIO_PIN, GPIO_PIN_RESET);
 				//vTaskDelay(20);/* 延时2000个tick */
 				//HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_GPIO_PIN);
       }

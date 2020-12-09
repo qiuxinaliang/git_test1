@@ -1,52 +1,43 @@
 #include "udp_demo.h"  
-//UDP接收数据缓冲区
+
+/* UDP接收数据缓冲区 */
 u8 udp_demo_recvbuf[UDP_DEMO_RX_BUFSIZE];	//UDP接收数据缓冲区 
-//UDP发送数据内容
-const u8 *tcp_demo_sendbuf="Apollo STM32F4/F7 UDP demo send data\r\n";
+
 struct udp_pcb *udppcb = NULL;  	//定义一个TCP服务器控制块
 struct ip_addr rmtipaddr;  	//远端ip地址
-//UDP 测试全局状态标记变量
-//bit7:没有用到
-//bit6:0,没有收到数据;1,收到数据了.
-//bit5:0,没有连接上;1,连接上了.
-//bit4~0:保留
 u8 udp_demo_flag;
 u8 UDP_Create_Status = true;
-
-extern Network_Manage Network_Manage_stru_temp; // 网络参数保存
-//Network_Manage Network_Manage_t;
 
 // 网络配置初始化
 void udp_Network_Init(void)
 {
+	E_Network_Manage_stru_temp.Anchoripaddress[0] = 192;
+	E_Network_Manage_stru_temp.Anchoripaddress[1] = 168;
+	E_Network_Manage_stru_temp.Anchoripaddress[2] = 1;
+	E_Network_Manage_stru_temp.Anchoripaddress[3] = 31;
+	E_Network_Manage_stru_temp.AnchorPort = 6009;
 	
-	Network_Manage_stru_temp.ip[0] = 192;	
-	Network_Manage_stru_temp.ip[1] = 168;
-	Network_Manage_stru_temp.ip[2] = 1;
-	Network_Manage_stru_temp.ip[3] = 104;
-	Network_Manage_stru_temp.local_port = 6008;
-	
-	Network_Manage_stru_temp.Subnetmask[0] = 255;
-  Network_Manage_stru_temp.Subnetmask[1] = 255;
-  Network_Manage_stru_temp.Subnetmask[2] = 255;
-  Network_Manage_stru_temp.Subnetmask[3] = 0;
+	E_Network_Manage_stru_temp.Subnetmask[0] = 255;
+	E_Network_Manage_stru_temp.Subnetmask[1] = 255;
+	E_Network_Manage_stru_temp.Subnetmask[2] = 255;
+	E_Network_Manage_stru_temp.Subnetmask[3] = 0;
 
-  Network_Manage_stru_temp.Gateway[0] = 192;
-  Network_Manage_stru_temp.Gateway[1] = 168;
-  Network_Manage_stru_temp.Gateway[2] = 1;
-  Network_Manage_stru_temp.Gateway[3] = 1;
-	
-	Network_Manage_stru_temp.remoteip[0] = 192;
-  Network_Manage_stru_temp.remoteip[1] = 168;
-  Network_Manage_stru_temp.remoteip[2] = 1;
-  Network_Manage_stru_temp.remoteip[3] = 100;
-  Network_Manage_stru_temp.remote_port = 6008;
+	E_Network_Manage_stru_temp.Gateway[0] = 192;
+	E_Network_Manage_stru_temp.Gateway[1] = 168;
+	E_Network_Manage_stru_temp.Gateway[2] = 1;
+	E_Network_Manage_stru_temp.Gateway[3] = 1;
 
-  Network_Manage_stru_temp.Engineipaddress[0] = 192;
-  Network_Manage_stru_temp.Engineipaddress[1] = 168;
-  Network_Manage_stru_temp.Engineipaddress[2] = 1;
-  Network_Manage_stru_temp.Engineipaddress[3] = 100;
-  Network_Manage_stru_temp.EnginePort = 6008;
+	E_Network_Manage_stru_temp.Centeripaddress[0] = 192;
+	E_Network_Manage_stru_temp.Centeripaddress[1] = 168;
+	E_Network_Manage_stru_temp.Centeripaddress[2] = 1;
+	E_Network_Manage_stru_temp.Centeripaddress[3] = 100;
+	E_Network_Manage_stru_temp.CenterPort = 6005;
+
+	E_Network_Manage_stru_temp.Engineipaddress[0] = 192;
+	E_Network_Manage_stru_temp.Engineipaddress[1] = 168;
+	E_Network_Manage_stru_temp.Engineipaddress[2] = 1;
+	E_Network_Manage_stru_temp.Engineipaddress[3] = 100;
+	E_Network_Manage_stru_temp.EnginePort = 6005;
 }
 
 
@@ -54,10 +45,10 @@ void udp_Network_Init(void)
 //设置远端IP地址
 void udp_demo_set_remoteip(void)
 {                  
-	lwipdev.remoteip[0] = Network_Manage_stru_temp.remoteip[0];
-	lwipdev.remoteip[1] = Network_Manage_stru_temp.remoteip[1];
-	lwipdev.remoteip[2] = Network_Manage_stru_temp.remoteip[2]; 
-	lwipdev.remoteip[3] = Network_Manage_stru_temp.remoteip[3];
+	lwipdev.remoteip[0] = E_Network_Manage_stru_temp.Centeripaddress[0];
+	lwipdev.remoteip[1] = E_Network_Manage_stru_temp.Centeripaddress[1];
+	lwipdev.remoteip[2] = E_Network_Manage_stru_temp.Centeripaddress[2]; 
+	lwipdev.remoteip[3] = E_Network_Manage_stru_temp.Centeripaddress[3];
 } 
 
 void udp_create(void)
@@ -68,10 +59,10 @@ void udp_create(void)
 	if(udppcb)//创建成功
 	{ 
 		IP4_ADDR(&rmtipaddr,lwipdev.remoteip[0],lwipdev.remoteip[1],lwipdev.remoteip[2],lwipdev.remoteip[3]);
-		err=udp_connect(udppcb,&rmtipaddr,UDP_DEMO_PORT);//UDP客户端连接到指定IP地址和端口号的服务器
+		err=udp_connect(udppcb,&rmtipaddr,E_Network_Manage_stru_temp.CenterPort);//UDP客户端连接到指定IP地址和端口号的服务器
 		if(err==ERR_OK)
 		{
-			err=udp_bind(udppcb,IP_ADDR_ANY,UDP_DEMO_PORT);//绑定本地IP地址与端口号
+			err=udp_bind(udppcb,IP_ADDR_ANY,E_Network_Manage_stru_temp.AnchorPort);//绑定本地IP地址与端口号
 			if(err==ERR_OK)	//绑定完成 
 			{
 				udp_recv(udppcb,udp_demo_recv,NULL);//注册接收回调函数 
@@ -102,26 +93,7 @@ void udp_create(void)
       delay_ms(1000);
     }
 	}
-
 }
-
-void udp_demo_test(void)
-{
-	udp_create();
-	while(1)
-	{
-		
-		udp_demo_senddata(udppcb);
-		
-		if(udp_demo_flag&1<<6)//是否收到数据?
-		{			
-			udp_demo_flag&=~(1<<6);//标记数据已经被处理了.
-		} 
-		lwip_periodic_handle();
-		delay_ms(2000);
-	}
-	udp_demo_connection_close(udppcb); 
-} 
 
 //UDP服务器回调函数
 void udp_demo_recv(void *arg,struct udp_pcb *upcb,struct pbuf *p,struct ip_addr *addr,u16_t port)
@@ -155,9 +127,11 @@ void udp_demo_recv(void *arg,struct udp_pcb *upcb,struct pbuf *p,struct ip_addr 
 		udp_disconnect(upcb); 
 	} 
 } 
+#if 0
 //UDP服务器发送数据
 void udp_demo_senddata(struct udp_pcb *upcb)
 {
+	u8 *tcp_demo_sendbuf="Apollo STM32F4/F7 UDP demo send data\r\n";
 	struct pbuf *ptr;
 	ptr=pbuf_alloc(PBUF_TRANSPORT,strlen((char*)tcp_demo_sendbuf),PBUF_POOL); //申请内存
 	if(ptr)
@@ -167,26 +141,24 @@ void udp_demo_senddata(struct udp_pcb *upcb)
 		pbuf_free(ptr);//释放内存
 	} 
 } 
+#endif
 
 //UDP服务器发送数据
-//extern Network_Manage Network_Manage_temp;
 void udp_UWB_senddata(struct udp_pcb *upcb, uint8_t *data, int len)
 {
-	//uint8_t ip[4];
 	Network_Manage udp_Network_Manage_temp;
-	uint16_t remote_port = 6009;
 	struct pbuf *ptr;
 	ptr=pbuf_alloc(PBUF_TRANSPORT,len,PBUF_POOL); //申请内存
 	if(ptr)
 	{
 		ptr->payload=(void *)data; 
-		udp_Network_Manage_temp.ip[0] = Network_Manage_stru_temp.remoteip[0];
-		udp_Network_Manage_temp.ip[1] = Network_Manage_stru_temp.remoteip[1];
-		udp_Network_Manage_temp.ip[2] = Network_Manage_stru_temp.remoteip[2];
-		udp_Network_Manage_temp.ip[3] = Network_Manage_stru_temp.remoteip[3];
+		udp_Network_Manage_temp.ip[0] = E_Network_Manage_stru_temp.Centeripaddress[0];
+		udp_Network_Manage_temp.ip[1] = E_Network_Manage_stru_temp.Centeripaddress[1];
+		udp_Network_Manage_temp.ip[2] = E_Network_Manage_stru_temp.Centeripaddress[2];
+		udp_Network_Manage_temp.ip[3] = E_Network_Manage_stru_temp.Centeripaddress[3];
 		IP4_ADDR(&rmtipaddr,udp_Network_Manage_temp.ip[0],udp_Network_Manage_temp.ip[1],udp_Network_Manage_temp.ip[2],udp_Network_Manage_temp.ip[3]);
 		upcb->remote_ip = *(ip_addr_t *)&rmtipaddr;
-		upcb->remote_port = Network_Manage_stru_temp.remote_port;
+		upcb->remote_port = E_Network_Manage_stru_temp.CenterPort;
 		udp_send(upcb,ptr);	//udp发送数据 
 		pbuf_free(ptr);//释放内存
 	} 
