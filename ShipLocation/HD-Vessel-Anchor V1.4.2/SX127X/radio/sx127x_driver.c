@@ -23,10 +23,12 @@ volatile static tRFLRStates loraStatus = RFLR_STATE_IDLE;				  //当前射频状
 /**
  * 初始化LoRa配置函数
  * 参数
- *     stting：配置结构体，传入需要设置的参数，eg{435000000,20,8,7,1}，具体内容查看 tLoRaSettings 定义,如果传入NULL，表示加载上次的设置(上次没有就加载默认设置)
+ * stting：配置结构体，传入需要设置的参数，eg{435000000,20,8,7,1}，具体内容查看 tLoRaSettings 定义,如果传入NULL，表示加载上次的设置(上次没有就加载默认设置)
  */
+extern uint8_t DeviceSelfCheckInfo;
 void sx127xInit(tLoRaSettings *stting)
 {
+	static int LoraInit_cnt = 0;
 	log_print(DEBUG,("sx127xInit\r\n"));
 	taskENTER_CRITICAL();
 	
@@ -34,6 +36,13 @@ void sx127xInit(tLoRaSettings *stting)
 	Sx127xRestart();
 	while (0x6c != Read127xReg(0x06))
 	{
+		LoraInit_cnt++;
+		if(LoraInit_cnt > 10)
+		{
+			LoraInit_cnt = 0;
+		  DeviceSelfCheckInfo = 0;
+			break;
+		}
 		//SpiInOut(0x55);
 		//log_print(DEBUG, ("reg = %d\r\n", Read127xReg(0x06)));
 		log_print(DEBUG,("[ERROR %s()-%d]spi error\r\n", __func__, __LINE__));

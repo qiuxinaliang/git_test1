@@ -36,7 +36,7 @@ int main(void)
 	MX_TIM6_Init();
 	I2C_EE_Init();
 	EE_upgrateFlag_Read();
-	upgrateFlag = 0x01;
+	//upgrateFlag = 0x01;
 	if(upgrateFlag == 0x01) 
 	{
 		log_print(DEBUG,("lwIP Initing...\n"));

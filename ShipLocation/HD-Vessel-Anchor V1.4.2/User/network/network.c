@@ -6,6 +6,7 @@
  */
 #include "network.h"
 
+extern uint8_t DeviceSelfCheckInfo;
 extern NetworkRecvData_Stru NetworkRecvData_Stru_temp;
 extern SemaphoreHandle_t MutexSemaphore;	//互斥信号量
 uint8_t Exception_Massage_Global = 0;
@@ -37,9 +38,12 @@ void Usr_NetworkRecvData_Handle(void)
 			memcpy((uint8_t *)&ProtocolFrameCtrlUint_temp, (uint8_t *)NetWorkData_temp, sizeof(ProtocolFrameCtrlUint));
 			if(ProtocolFrameCtrlUint_temp.DeviceType == SeaPosJianZhang_Down)
 			{
-				ret = sx127xSend((uint8_t *)NetWorkData_temp + sizeof(ProtocolFrameCtrlUint), bswap_16(ProtocolFrameCtrlUint_temp.DataLen), 100);
+				if(DeviceSelfCheckInfo == 1)
+				{
+					ret = sx127xSend((uint8_t *)NetWorkData_temp + sizeof(ProtocolFrameCtrlUint), bswap_16(ProtocolFrameCtrlUint_temp.DataLen), 100);
+					log_print(DEBUG,("Jz_ret = %d\r\n", ret));
+				}
 				NetworkRecvData_Stru_temp.NetworkRecvData_Len = 0;
-				log_print(DEBUG,("Jz_ret = %d\r\n", ret));
 			}
 			else if(ProtocolFrameCtrlUint_temp.DeviceType == SeaLoraAnchor_Down)
 			{
@@ -84,7 +88,8 @@ void Usr_NetworkRecvData_Handle(void)
 		  NetworkRecvData_Stru_temp.NetworkRecvData_Len = 0;
     }
 		#endif
-		JianZhang_LoraData_Handle();
+		if(DeviceSelfCheckInfo == 1)
+			JianZhang_LoraData_Handle();
 		vTaskDelay(10);
 	}
 }
