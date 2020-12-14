@@ -302,8 +302,8 @@ void UDP_RecvDataHandle(void)
 				j++;
 			}
 		}
-		if((Network_Manage_t->remoteip[0] == Network_Manage_t->ip[0])&& (Network_Manage_t->remoteip[1] == Network_Manage_t->ip[1])\
-			&&(Network_Manage_t->remoteip[2] == Network_Manage_t->ip[2]))
+		if((Network_Manage_t->remoteip[0] == Network_Manage_t->ip[0])&& (Network_Manage_t->remoteip[1] == Network_Manage_t->ip[1])
+			&&(Network_Manage_t->remoteip[2] == Network_Manage_t->ip[2]) && (Network_Manage_t->remoteip[3] != Network_Manage_t->ip[3]))
 		{
 			Network_Manage_pbuf->net_mark = 0x01;
 			STMFLASH_NetworkPara_Config_Write(Network_Manage_pbuf);

@@ -5,18 +5,13 @@
  * @**********************************************************************************************************: 
  */
 #include "common.h"
-char data[30] = {0};
 char heart_data[8] = {0x48,0x44,0x55,0x54,0x00,0x00,0x4F,0x4B};
 extern distance_SendPackets distance_SendPackets_temp;
-extern DistanceOffset_Stru DistanceOffset_Stru_temp;
 extern Network_Manage Network_Manage_t;
-//extern AnchorFollowMode_Stru AnchorFollowMode_Stru_temp;
 extern AnchorFollowCmd_Stru AnchorFollowCmd_Stru_temp;
 extern uint8_t UWB_address_temp;
 extern uint8_t address[8];
 extern int AnchorMode_Flag;
-DistanceOffset_Stru DistanceOffset_Formflash;
-uint8_t HeartTime_Flag = 0;
 int HeartTime_Cnt = 0;
 int main(void)
 { 
@@ -55,12 +50,13 @@ int main(void)
 	DW_User_Justable_Config(dwm);
 	my_mem_init(SRAMIN);		    //初始化内部内存池
 	my_mem_init(SRAMCCM);		    //初始化CCM内存池
-	DistanceData_QUEUE_INIT(DistanceData_Queue_Size);
+	//DistanceData_QUEUE_INIT(DistanceData_Queue_Size);
 	ret = STMFLASH_NetworkPara_Config_Read();  
 	if(ret != 0x01)
 	{
     if((Network_Manage_t.ip[0] != Network_Manage_t.remoteip[0]) || (Network_Manage_t.ip[1] != Network_Manage_t.remoteip[1])
-			||(Network_Manage_t.ip[0] == 0xFF) ||(Network_Manage_t.remoteip[0] == 0xFF))
+			||(Network_Manage_t.ip[0] == 0xFF) ||(Network_Manage_t.remoteip[0] == 0xFF) 
+		  || (Network_Manage_t.ip[0] != Network_Manage_t.remoteip[0]) || (Network_Manage_t.ip[3] == Network_Manage_t.remoteip[3]))
     {
       log_print(DEBUG,("network default config...\r\n"));
 		  udp_Network_Init();
