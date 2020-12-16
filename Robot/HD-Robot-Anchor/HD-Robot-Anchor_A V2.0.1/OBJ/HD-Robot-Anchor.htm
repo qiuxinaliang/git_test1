@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\OBJ\HD-Robot-Anchor.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\OBJ\HD-Robot-Anchor.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Dec 11 10:44:07 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Dec 14 11:03:04 2020
 <BR><P>
 <H3>Maximum Stack Usage =        696 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -733,9 +733,9 @@ Global Symbols
 <P><STRONG><a name="[9b]"></a>DW_EXIT_GPIO_NVIC_Config</STRONG> (Thumb, 132 bytes, Stack size 32 bytes, gpio.o(i.DW_EXIT_GPIO_NVIC_Config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = DW_EXIT_GPIO_NVIC_Config &rArr; HAL_NVIC_SetPriority &rArr; NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -786,8 +786,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 696<LI>Call Chain = DW_TagRecvState_Distance &rArr; UWB_DistanceToAngle &rArr; udp_UWB_senddata &rArr; udp_send &rArr; udp_sendto &rArr; udp_sendto_if &rArr; ip_output_if &rArr; ip_frag &rArr; pbuf_alloc &rArr; pbuf_free &rArr; mem_free &rArr; plug_holes &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DW_TagEnableReceive_Distance
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UWB_DistanceToAngle
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_TogglePin
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UWB_DistanceToAngle
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lwip_periodic_handle
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dwStopReceive
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dwIdle
@@ -961,10 +961,10 @@ Global Symbols
 <P><STRONG><a name="[d4]"></a>HAL_ETH_MspInit</STRONG> (Thumb, 298 bytes, Stack size 32 bytes, lan8720.o(i.HAL_ETH_MspInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = HAL_ETH_MspInit &rArr; HAL_NVIC_SetPriority &rArr; NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
-<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ETH_Init
 </UL>
@@ -1080,11 +1080,11 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[d1]"></a>HAL_GetTick</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_hal.o(i.HAL_GetTick))
-<BR><BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
+<BR><BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_OscConfig
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_ClockConfig
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PWREx_EnableOverDrive
+<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ETH_WritePHYRegister
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ETH_ReadPHYRegister
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ETH_Init
@@ -1197,9 +1197,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetSysClockFreq
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_InitTick
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK2Freq
+<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK2Freq
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK1Freq
+<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_InitTick
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ETH_Init
 </UL>
 
@@ -1371,9 +1371,9 @@ Global Symbols
 <P><STRONG><a name="[109]"></a>HAL_UART_MspInit</STRONG> (Thumb, 130 bytes, Stack size 32 bytes, usart.o(i.HAL_UART_MspInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = HAL_UART_MspInit &rArr; HAL_NVIC_SetPriority &rArr; NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 </UL>
@@ -2926,7 +2926,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ETH_IRQHandler
 </UL>
 
-<P><STRONG><a name="[6d]"></a>main</STRONG> (Thumb, 1662 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[6d]"></a>main</STRONG> (Thumb, 1560 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 696<LI>Call Chain = main &rArr; DW_TagRecvState_Distance &rArr; UWB_DistanceToAngle &rArr; udp_UWB_senddata &rArr; udp_send &rArr; udp_sendto &rArr; udp_sendto_if &rArr; ip_output_if &rArr; ip_frag &rArr; pbuf_alloc &rArr; pbuf_free &rArr; mem_free &rArr; plug_holes &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;udp_create
@@ -3287,9 +3287,9 @@ Global Symbols
 <P><STRONG><a name="[7]"></a>reset</STRONG> (Thumb, 78 bytes, Stack size 32 bytes, dwops.o(i.reset))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = reset &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> dwops.o(.data)
 </UL>
