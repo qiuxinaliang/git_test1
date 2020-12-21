@@ -172,8 +172,8 @@ static void HardwareConfigInfo_Handle(void)
 		E_Network_Manage_stru_temp.Anchoripaddress[0] = 192;
 		E_Network_Manage_stru_temp.Anchoripaddress[1] = 168;
 		E_Network_Manage_stru_temp.Anchoripaddress[2] = 1;
-		E_Network_Manage_stru_temp.Anchoripaddress[3] = 31;
-		E_Network_Manage_stru_temp.AnchorPort = 6009;
+		E_Network_Manage_stru_temp.Anchoripaddress[3] = 33;
+		E_Network_Manage_stru_temp.AnchorPort = 6008;
 		
 		E_Network_Manage_stru_temp.Subnetmask[0] = 255;
 		E_Network_Manage_stru_temp.Subnetmask[1] = 255;
@@ -188,14 +188,14 @@ static void HardwareConfigInfo_Handle(void)
 		E_Network_Manage_stru_temp.Centeripaddress[0] = 192;
 		E_Network_Manage_stru_temp.Centeripaddress[1] = 168;
 		E_Network_Manage_stru_temp.Centeripaddress[2] = 1;
-		E_Network_Manage_stru_temp.Centeripaddress[3] = 100;
-		E_Network_Manage_stru_temp.CenterPort = 6009;
+		E_Network_Manage_stru_temp.Centeripaddress[3] = 248;
+		E_Network_Manage_stru_temp.CenterPort = 6008;
 
 		E_Network_Manage_stru_temp.Engineipaddress[0] = 192;
 		E_Network_Manage_stru_temp.Engineipaddress[1] = 168;
 		E_Network_Manage_stru_temp.Engineipaddress[2] = 1;
-		E_Network_Manage_stru_temp.Engineipaddress[3] = 100;
-		E_Network_Manage_stru_temp.EnginePort = 6009;
+		E_Network_Manage_stru_temp.Engineipaddress[3] = 248;
+		E_Network_Manage_stru_temp.EnginePort = 6008;
 	}
 	EE_upgrateFlag_Read();
 	if(upgrateFlag == 1)

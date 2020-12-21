@@ -9,7 +9,7 @@
 
 #include "common.h"
 /* Wifi debugging options */
-#define LOG_ON		0
+#define LOG_ON		1
 #define u32 uint32_t
 /* Exported types ------------------------------------------------------------*/ 
 typedef enum

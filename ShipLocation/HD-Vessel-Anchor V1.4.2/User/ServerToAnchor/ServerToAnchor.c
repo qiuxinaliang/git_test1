@@ -219,11 +219,16 @@ void ServiceSendConfig_Handle(void)
     if(CalibrationValue_temp == ServerSendConfig_Stru_temp->ProtocolFrameEnderUint_Temp.CalibrationValue)
     {
 			log_print(DEBUG,("ServerSendConfig_Stru Calibration Success\r\n"));
+			DataFrameState = 0x01;
+      TimeStamp = ServerSendConfig_Stru_temp->TimeStamp;
+      CmdAck = ServerSendConfig_Stru_temp->ProtocolFrameCtrlUint_Temp.cmd_Unit;
+      ServiceAndDeviceResponse(DataFrameState, CmdAck, TimeStamp);
       E_AnchorWorkMode = ServerSendConfig_Stru_temp->AnchorWorkMode;
       memcpy((uint8_t *)&E_Network_Manage_stru_temp.Anchoripaddress, (uint8_t *)ServerSendConfig_Stru_temp->Anchoripaddress, 4);
 			for(int i = 0; i < 4; i++)
 		  log_print(DEBUG,("ipaddress[%d] = %d\r\n",i, E_Network_Manage_stru_temp.Anchoripaddress[i]));
-      E_Network_Manage_stru_temp.AnchorPort = ServerSendConfig_Stru_temp->AnchorPort;
+			E_Network_Manage_stru_temp.AnchorPort = ServerSendConfig_Stru_temp->CenterPort;
+      //E_Network_Manage_stru_temp.AnchorPort = ServerSendConfig_Stru_temp->AnchorPort;
 			log_print(DEBUG,("EnginePort = %d\r\n", E_Network_Manage_stru_temp.AnchorPort));
       memcpy((uint8_t *)&E_Network_Manage_stru_temp.Subnetmask, (uint8_t *)ServerSendConfig_Stru_temp->Subnetmask, 4);
 			for(int i = 0; i < 4; i++)
@@ -243,10 +248,6 @@ void ServiceSendConfig_Handle(void)
       EE_Network_Write();
       EE_AnchorWorkMode_Write();
       //AnchorWorkMode_Write();
-      DataFrameState = 0x01;
-      TimeStamp = ServerSendConfig_Stru_temp->TimeStamp;
-      CmdAck = ServerSendConfig_Stru_temp->ProtocolFrameCtrlUint_Temp.cmd_Unit;
-      ServiceAndDeviceResponse(DataFrameState, CmdAck, TimeStamp);
 			SYS_REBOOT();
     }
     else

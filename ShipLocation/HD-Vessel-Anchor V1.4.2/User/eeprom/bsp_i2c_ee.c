@@ -303,12 +303,12 @@ uint8_t I2C_Test(void)
 	E_Version_stru_temp.SoftwareVersion[2] = 2;
 	#endif
 	
-	E_Network_Manage_stru_temp.net_mark = 0x00;
+	E_Network_Manage_stru_temp.net_mark = 0x01;
   E_Network_Manage_stru_temp.Anchoripaddress[0] = 192;
   E_Network_Manage_stru_temp.Anchoripaddress[1] = 168;
   E_Network_Manage_stru_temp.Anchoripaddress[2] = 1;
-  E_Network_Manage_stru_temp.Anchoripaddress[3] = 31;
-  E_Network_Manage_stru_temp.AnchorPort = 6009;
+  E_Network_Manage_stru_temp.Anchoripaddress[3] = 33;
+  E_Network_Manage_stru_temp.AnchorPort = 6008;
   
   E_Network_Manage_stru_temp.Subnetmask[0] = 255;
   E_Network_Manage_stru_temp.Subnetmask[1] = 255;
@@ -323,14 +323,14 @@ uint8_t I2C_Test(void)
   E_Network_Manage_stru_temp.Centeripaddress[0] = 192;
   E_Network_Manage_stru_temp.Centeripaddress[1] = 168;
   E_Network_Manage_stru_temp.Centeripaddress[2] = 1;
-  E_Network_Manage_stru_temp.Centeripaddress[3] = 100;
-  E_Network_Manage_stru_temp.CenterPort = 6009;
+  E_Network_Manage_stru_temp.Centeripaddress[3] = 248;
+  E_Network_Manage_stru_temp.CenterPort = 6008;
 
   E_Network_Manage_stru_temp.Engineipaddress[0] = 192;
   E_Network_Manage_stru_temp.Engineipaddress[1] = 168;
   E_Network_Manage_stru_temp.Engineipaddress[2] = 1;
-  E_Network_Manage_stru_temp.Engineipaddress[3] = 100;
-  E_Network_Manage_stru_temp.EnginePort = 6009;
+  E_Network_Manage_stru_temp.Engineipaddress[3] = 248;
+  E_Network_Manage_stru_temp.EnginePort = 6008;
 	#if 1
 	upgrateFlag = 0x00;
 	E_DeviceType = 0x03;
