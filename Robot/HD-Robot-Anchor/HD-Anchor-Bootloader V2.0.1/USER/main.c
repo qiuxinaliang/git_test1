@@ -11,6 +11,7 @@ extern distance_SendPackets distance_SendPackets_temp;
 int main(void)
 {   
 	uint8_t ret = 0, Upgraderesponse_Flag = 1;
+	static int Upgradereq_cnt = 0;
 	uint32_t timetemp = 0;
 	HAL_Init();                     //初始化HAL库   
 	Stm32_Clock_Init(360,25,2,8);   //设置时钟,180Mhz
@@ -34,12 +35,19 @@ int main(void)
 			log_print(ERR,("lwIP Initing fail\n Retrying...\r\n"));
 			delay_ms(500);
 		}
-		printf("lwIP Initing succes\r\n");
 		log_print(DEBUG,("lwIP Initing succes"));
 		udp_create();
 		UDP_SendUpgradeReq();
 		while(Upgraderesponse_Flag)
 		{
+			Upgradereq_cnt++;
+			if(Upgradereq_cnt > 5)
+			{
+				udp_demo_connection_close(udppcb); 
+				BootLoad_to_App(FLASH_APP_ADDR);
+				Upgradereq_cnt = 0;
+				break;
+			}
 			timetemp = HAL_GetTick();
 			while(HAL_GetTick() < (timetemp + 5000)) /* 判定是否有测距标志*/
 			{
@@ -50,7 +58,12 @@ int main(void)
 					ret = UDP_RecvData_Handle();
 					udp_demo_flag&=~(1<<6);//标记数据已经被处理了.
 					break;
-				} 
+				}
+				if(tim6_irq_flag == true)
+				{
+					tim6_irq_flag = false;
+					HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_GPIO_PIN);
+				}
 			}
 			if(Upgraderesponse_Flag == 1)
 			{

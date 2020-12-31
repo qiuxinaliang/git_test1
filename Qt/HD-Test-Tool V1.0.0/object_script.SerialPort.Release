@@ -3,8 +3,10 @@ release/mainwindow.o
 release/qcustomplot.o
 release/anchor_para_set.o
 release/rtlc_posview.o
-release/softwareupdata.o
+release/udpsever.o
+release/public.o
 release/moc_mainwindow.o
 release/moc_qcustomplot.o
 release/moc_rtls_posview.o
-release/moc_softwareupdata.o
+release/moc_udpsever.o
+release/moc_public.o

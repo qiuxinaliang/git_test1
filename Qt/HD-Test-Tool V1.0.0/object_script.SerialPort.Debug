@@ -3,8 +3,10 @@ debug/mainwindow.o
 debug/qcustomplot.o
 debug/anchor_para_set.o
 debug/rtlc_posview.o
-debug/softwareupdata.o
+debug/udpsever.o
+debug/public.o
 debug/moc_mainwindow.o
 debug/moc_qcustomplot.o
 debug/moc_rtls_posview.o
-debug/moc_softwareupdata.o
+debug/moc_udpsever.o
+debug/moc_public.o

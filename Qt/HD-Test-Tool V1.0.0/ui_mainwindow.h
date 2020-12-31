@@ -62,6 +62,10 @@ public:
     QPushButton *clearButton;
     QPushButton *sendButton;
     QWidget *tab_4;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton_4;
+    QTextEdit *textEdit_10;
+    QTextEdit *textEdit_11;
     QWidget *tab_3;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_4;
@@ -111,12 +115,13 @@ public:
     QPushButton *y_add;
     QPushButton *y_sub;
     QPushButton *pause;
+    QPushButton *save_button;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(785, 518);
+        MainWindow->resize(855, 518);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         horizontalLayout_8 = new QHBoxLayout(centralWidget);
@@ -125,6 +130,7 @@ public:
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setEnabled(true);
         tabWidget->setFocusPolicy(Qt::TabFocus);
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
@@ -293,6 +299,18 @@ public:
         tabWidget->addTab(tab, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName(QString::fromUtf8("tab_4"));
+        pushButton_3 = new QPushButton(tab_4);
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        pushButton_3->setGeometry(QRect(20, 400, 75, 23));
+        pushButton_4 = new QPushButton(tab_4);
+        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
+        pushButton_4->setGeometry(QRect(130, 400, 75, 23));
+        textEdit_10 = new QTextEdit(tab_4);
+        textEdit_10->setObjectName(QString::fromUtf8("textEdit_10"));
+        textEdit_10->setGeometry(QRect(23, 20, 481, 281));
+        textEdit_11 = new QTextEdit(tab_4);
+        textEdit_11->setObjectName(QString::fromUtf8("textEdit_11"));
+        textEdit_11->setGeometry(QRect(20, 320, 481, 71));
         tabWidget->addTab(tab_4, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
@@ -449,6 +467,9 @@ public:
         pause = new QPushButton(tab_2);
         pause->setObjectName(QString::fromUtf8("pause"));
         pause->setGeometry(QRect(690, 10, 41, 31));
+        save_button = new QPushButton(tab_2);
+        save_button->setObjectName(QString::fromUtf8("save_button"));
+        save_button->setGeometry(QRect(50, 432, 61, 31));
         tabWidget->addTab(tab_2, QString());
 
         horizontalLayout_8->addWidget(tabWidget);
@@ -492,6 +513,8 @@ public:
         clearButton->setText(QApplication::translate("MainWindow", "\346\270\205\347\251\272\346\216\245\346\224\266", nullptr));
         sendButton->setText(QApplication::translate("MainWindow", "\345\217\221\351\200\201\346\225\260\346\215\256", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "\344\270\262\345\217\243\350\256\276\347\275\256", nullptr));
+        pushButton_3->setText(QApplication::translate("MainWindow", "PushButton", nullptr));
+        pushButton_4->setText(QApplication::translate("MainWindow", "PushButton", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "\345\256\236\346\227\266\345\256\232\344\275\215", nullptr));
         textEdit_3->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -676,6 +699,7 @@ public:
         y_add->setText(QApplication::translate("MainWindow", "+", nullptr));
         y_sub->setText(QApplication::translate("MainWindow", "-", nullptr));
         pause->setText(QApplication::translate("MainWindow", "\345\274\200\345\247\213", nullptr));
+        save_button->setText(QApplication::translate("MainWindow", "\344\277\235\345\255\230", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "\345\233\276\350\241\250", nullptr));
     } // retranslateUi
 

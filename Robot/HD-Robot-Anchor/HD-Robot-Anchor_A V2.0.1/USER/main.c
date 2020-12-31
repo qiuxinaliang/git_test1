@@ -92,7 +92,7 @@ int main(void)
 	udp_create();
 	
 	heart_data[3] = Anchor_Workmode;
-	heart_data[4] = Network_Manage_t.ip[3];
+	heart_data[4] = address[0];
 	heart_data[5] = Network_Manage_t.remoteip[3];
 	
 	#endif

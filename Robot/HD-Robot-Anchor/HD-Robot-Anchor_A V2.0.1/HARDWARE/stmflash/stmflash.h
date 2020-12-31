@@ -82,7 +82,7 @@ typedef struct DistanceOffset_Stru
 #pragma pack()
 #endif
 
-#pragma pack(1)  
+#pragma pack(4)  
 typedef struct 
 {
 	uint8_t net_mark;
@@ -93,16 +93,13 @@ typedef struct
 }Network_Manage;
 #pragma pack()
 
-#pragma pack(1)
+#pragma pack(4)
 typedef struct STMFlashReadWrite_Stru
 {
 	uint8_t UpgradeFlag; // 升级状态标志
 	uint8_t UWB_Anchor_address;
-  //DistanceOffset_Stru DistanceOffset_Stru_temp; //测距补偿值保存
-	//int32_t TX_RX_delay_offset;	 // 天线延时值保存
   uint8_t WorkingMode;  // 基站跟随模式设置
 	Network_Manage Network_Manage_temp; // 网络参数保存
-	//AnchorFollowMode_Stru AnchorFollowMode_Stru_temp;
 }STMFlashReadWrite_Stru;
 #pragma pack()
  

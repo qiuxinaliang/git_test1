@@ -13,8 +13,11 @@ LICENSE: MIT
 #include <QtSerialPort/QSerialPortInfo>
 #include <QTimer>
 #include <QPaintEvent>
+#include <QUdpSocket>
 
 extern QString SerialRecvData;
+extern uint8_t udpRecv_hexData[20];
+extern int save_button_triggedFlag;
 namespace Ui {
 class MainWindow;
 }
@@ -27,6 +30,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void serialUpdateData(double value);
+    QFile *hexfile;
 
 private slots:
     void on_clearButton_clicked();
@@ -37,13 +41,13 @@ private slots:
     void onUpdateChart();
     void onCreateTestData();
     void onTestClicked(bool status);
+    void SerialRecvDataHandle();
 
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
 
     void on_tabWidget_currentChanged(int index);
 
-    void distance_to_angle();
     void on_pause_clicked();
 
     void on_y_sub_clicked();
@@ -53,6 +57,8 @@ private slots:
     void on_x_add_clicked();
 
     void on_x_sub_clicked();
+
+    void on_save_button_clicked();
 
 protected:
     int i, j;
@@ -65,13 +71,14 @@ private:
     QVector<double> m_ys;
     QVector<double> m1_xs;
     QVector<double> m1_ys;
+    QVector<double> m2_xs;
+    QVector<double> m2_ys;
 
     int m_xLength;
     double m_serialUpdateData;
     double x_serialUpdaeData;
     double YAxis_AddOrSub;
     double XAxis_AddOrSub;
-    //uint8_t m_serialUpdateData;
 
     QTimer m_testTimer;
     QTimer m_SerialPortReadDataTimer;
@@ -79,6 +86,13 @@ private:
 
     QTimer PianterTimer;
     QTimer PianterTimerIng;
+
+    int port;
+    bool isStarted;
+    QUdpSocket *udpSocket;
+    QTimer *timer;
+    class Public *myPublic;
+    class udpsever *myudpserver;
 
 };
 

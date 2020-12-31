@@ -8,12 +8,18 @@ LICENSE: MIT
 #include "ui_mainwindow.h"
 #include <math.h>
 #include <rtls_postion/rtls_posview.h>
+#include "public/public.h"
+#include "network/udpsever.h"
 
 QString SerialRecvData;
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWindow), m_xLength(0)
 {
     ui->setupUi(this);
+    myPublic = nullptr;
+    myPublic = new Public();
+    myudpserver = new udpsever();
     /* 向绘图区域QCustomPlot添加一条曲线 */
+    ui->qCustomPlot->addGraph();
     ui->qCustomPlot->addGraph();
     ui->qCustomPlot->addGraph();
     QPen pen;
@@ -21,19 +27,19 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWin
 
     //pen.setStyle(Qt::PenStyle::DashLine);//虚线
     pen.setColor(Qt::red);//黄色
-    ui->qCustomPlot->graph(0)->setPen(pen); //
-    m_SerialPortReadDataTimer.start(10);
+    ui->qCustomPlot->graph(0)->setPen(pen);
+    pen.setColor(Qt::green);//黄色
+    ui->qCustomPlot->graph(2)->setPen(pen);
+
+    m_SerialPortReadDataTimer.start(1);
     m_testTimer.start(10);
-    //m_updateChartTimer.stop();
+
     connect(&m_updateChartTimer, SIGNAL(timeout()), this, SLOT(onUpdateChart()));
-    //connect(&m_testTimer, SIGNAL(timeout()), this, SLOT(onCreateTestData()));
-    //connect(ui->m_testBtn, SIGNAL(clicked(bool)), this, SLOT(onTestClicked(bool)));
 
     /* 连接数据信号槽 */
-    //connect(&m_serialPort, SIGNAL(readyRead()), this, SLOT(onReadData()));
     connect(&m_SerialPortReadDataTimer, SIGNAL(timeout()), this, SLOT(onReadData()));
-    myWidget *myWidget_serialHandel = new myWidget();
-    connect(&m_testTimer, SIGNAL(timeout()), myWidget_serialHandel, SLOT(SerialRecvDataHandle()));
+    //myWidget *myWidget_serialHandel = new myWidget();
+    connect(&m_testTimer, SIGNAL(timeout()), this, SLOT(SerialRecvDataHandle()));
 
     /* 设置坐标轴标签名称 */
     ui->qCustomPlot->xAxis->setLabel("时间");
@@ -57,11 +63,10 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWin
     /* 关闭发送按钮的使能 */
     ui->sendButton->setEnabled(false);
 
-    PianterTimer.start(1000);
-    PianterTimerIng.start(10);
-    connect(&PianterTimer, SIGNAL(timeout()), this, SLOT(T_PiantEvent()));
-    connect(&PianterTimerIng, SIGNAL(timeout()), this, SLOT(paintEvent()));
-
+    //PianterTimer.start(1000);
+    //PianterTimerIng.start(10);
+    //connect(&PianterTimer, SIGNAL(timeout()), this, SLOT(T_PiantEvent()));
+    //connect(&PianterTimerIng, SIGNAL(timeout()), this, SLOT(paintEvent()));
     qDebug()<<"界面初始化成功！";
 }
 
@@ -105,12 +110,15 @@ void MainWindow::onReadData()
     }
     if(!buf.isEmpty())
     {
+#if 0
         QString str = ui->textEdit->toPlainText();
-        str += tr(buf.toLower());     /* 16进制数转为字符 */
+        str += '\n';
+        str += tr(buf.toHex());     /* 16进制数转为字符 */
         str.toStdString();
         ui->textEdit->clear();
         ui->textEdit->append(str); /* 显示字符串 */
         str.clear();
+#endif
     }
     buf.clear();
 }
@@ -124,8 +132,6 @@ void MainWindow::onReadData()
  */
 void MainWindow::onUpdateChart()
 {
-    static  double m_serialUpdateData_Temp;
-    static double x_serialUpdateDate_Temp;
     if(m_xLength <= XAxis_AddOrSub)    /* 设置x 轴显示坐标范围 */
     {
          ui->qCustomPlot->xAxis->setRange(0, XAxis_AddOrSub);
@@ -135,51 +141,22 @@ void MainWindow::onUpdateChart()
          ui->qCustomPlot->xAxis->setRange(m_xLength - XAxis_AddOrSub, m_xLength);
     }
 
-    if(m_serialUpdateData > 0.001)  /* 判断更新数据是否有效 */
-    {
-        m_serialUpdateData_Temp = m_serialUpdateData;
-        x_serialUpdateDate_Temp = x_serialUpdaeData;
-    }
-    //ui->qCustomPlot->clearFocus();      /* 刷新显示 */
+    ui->qCustomPlot->clearFocus();      /* 刷新显示 */
     m_xs.append(m_xLength);     /* 更新X坐标 */
-    m_ys.append(distance_SendPackets_temp.B_distance - 300);   /* 更新Y坐标 */
+    m_ys.append(distance_SendPackets_temp.B_distance);   /* 更新Y坐标 */
     m1_xs.append(m_xLength);     /* 更新X坐标 */
-    m1_ys.append(distance_SendPackets_temp.A_distance - 350);   /* 更新Y坐标 */
-    ui->qCustomPlot->replot();      /* 刷新显示 */
+    m1_ys.append(distance_SendPackets_temp.A_distance);   /* 更新Y坐标 */
+
+    m2_xs.append(m_xLength);     /* 更新X坐标 */
+    m2_ys.append(distance_SendPackets_temp.reserved);   /* 更新Y坐标 */
+
+    ui->qCustomPlot->replot(QCustomPlot::rpQueuedReplot);      /* 刷新显示 */
     ui->qCustomPlot->graph(0)->setData(m_xs, m_ys);
     ui->qCustomPlot->graph(1)->setData(m1_xs, m1_ys);
+    ui->qCustomPlot->graph(2)->setData(m2_xs, m2_ys);
     m_xLength++;
     //QString str = "123";
    // ui->qCustomPlot->xAxis->setLabel("角度:" + str);
-    distance_to_angle();
-}
-
-void MainWindow::distance_to_angle()
-{
-   double AB_distance_temp = ui->textEdit_2->toPlainText().toDouble(nullptr);
-   qDebug() << "distance" << AB_distance_temp;
-
-   double A_distance_temp = 0, B_distance_temp = 0;
-   A_distance_temp = distance_SendPackets_temp.A_distance;
-   B_distance_temp = distance_SendPackets_temp.B_distance;
-   //AB_distance_temp = 700;
-   //B_distance_temp = 6000;
-   //A_distance_temp = 6000;
-   //AB_distance_temp = 6000;
-   if(((A_distance_temp + B_distance_temp) > AB_distance_temp) && ((A_distance_temp + AB_distance_temp) > B_distance_temp)
-          && ((B_distance_temp + AB_distance_temp) > A_distance_temp))
-   {
-        qDebug() << "可以构成三角形";
-        double A_BX_angle = (acos(((A_distance_temp*A_distance_temp) + (AB_distance_temp*AB_distance_temp) - (B_distance_temp*B_distance_temp))
-                            /(2*A_distance_temp*AB_distance_temp)))*(180.0/M_PI);
-        A_BX_angle = (distance_SendPackets_temp.reserved)/1000;
-        QString str = QString("%1").arg(A_BX_angle);
-        ui->qCustomPlot->xAxis->setLabel("角度:"+str);
-   }
-   else
-   {
-       ui->qCustomPlot->xAxis->setLabel("角度:Fail");
-   }
 }
 
 /* 随机数的创建 */
@@ -318,5 +295,123 @@ void MainWindow::on_x_add_clicked()
 
 void MainWindow::on_x_sub_clicked()
 {
-     XAxis_AddOrSub -= 100;
+    XAxis_AddOrSub -= 100;
+}
+
+int save_button_triggedFlag  = 0;
+void MainWindow::on_save_button_clicked()
+{
+    hexfile = new QFile();
+    hexfile->setFileName("save_original.dat");
+    hexfile->resize(100000);
+    if(ui->save_button->text() == tr("保存"))
+    {
+        hexfile->open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream out(hexfile);
+        save_button_triggedFlag = 1;
+        ui->save_button->setText(tr("结束保存"));
+
+    }
+    else if(ui->save_button->text() == tr("结束保存"))
+    {
+        save_button_triggedFlag = 0;
+        hexfile->close();
+        ui->save_button->setText(tr("保存"));
+    }
+}
+
+void MainWindow::SerialRecvDataHandle()
+{
+    uint8_t temp_data = 0;
+    bool RecvPacketHeader;
+    bool RecvPacketEnder;
+    uint32_t AOrBdistance_temp = 0;
+    static uint32_t AOrBdistance_last[2] = {0};
+    uint8_t distance_temp[8] = { 0 };
+    QString SerialHex_temp ;
+    QDataStream out(hexfile);
+
+    RecvPacketHeader =  SerialRecvData.startsWith("4844");   /* 对接收字符串进行校验 */
+    RecvPacketEnder =  SerialRecvData.endsWith("2542");
+    if((RecvPacketHeader == true) || (RecvPacketEnder == true))    /* 如果校验为真 */
+    {
+        SerialHex_temp.clear();
+        SerialHex_temp =  SerialRecvData.mid(4, 2);    /* 读取字符串中有效值 */
+        distance_SendPackets_temp.id_anchor = uint8_t(SerialHex_temp.toInt(nullptr, 16));
+        SerialHex_temp.clear();
+        SerialHex_temp =  SerialRecvData.mid(6, 2);    /* 读取字符串中有效值 */
+        distance_SendPackets_temp.A_id_tag = uint8_t(SerialHex_temp.toInt(nullptr, 16));
+        SerialHex_temp.clear();
+        for(int i = 0; i < 4;i++)
+        {
+            SerialHex_temp.clear();
+            SerialHex_temp =  SerialRecvData.mid((8 + i*2), 2);    /* 读取字符串中有效值 */
+            distance_temp[i] = uint8_t(SerialHex_temp.toInt(nullptr, 16));
+            SerialHex_temp.clear();
+        }
+        AOrBdistance_temp = uint32_t(distance_temp[0] | (distance_temp[1]<<8) | (distance_temp[2]<<16) | (distance_temp[3]<<24));
+        distance_SendPackets_temp.A_distance = AOrBdistance_temp;
+
+        if(AOrBdistance_temp != 0)
+        {
+            AOrBdistance_last[0] = AOrBdistance_temp;
+            if(save_button_triggedFlag == 1)
+            {
+               out << 0x12345678;
+               qDebug() << "distance_tempA" << distance_SendPackets_temp.A_distance;
+            }
+        }
+        AOrBdistance_temp = 0;
+
+        SerialHex_temp.clear();
+        SerialHex_temp =  SerialRecvData.mid(16, 2);    /* 读取字符串中有效值 */
+        distance_SendPackets_temp.B_id_tag = uint8_t(SerialHex_temp.toInt(nullptr, 16));
+        SerialHex_temp.clear();
+        for(int i = 0; i < 4;i++)
+        {
+            SerialHex_temp.clear();
+            SerialHex_temp =  SerialRecvData.mid((18 + i*2), 2);    /* 读取字符串中有效值 */
+            distance_temp[i] = uint8_t(SerialHex_temp.toInt(nullptr, 16));
+            SerialHex_temp.clear();
+        }
+        AOrBdistance_temp = uint32_t(distance_temp[0] | (distance_temp[1]<<8) | (distance_temp[2]<<16) | (distance_temp[3]<<24));
+        distance_SendPackets_temp.B_distance = AOrBdistance_temp;
+        if(AOrBdistance_temp != 0)
+            AOrBdistance_last[1] = AOrBdistance_temp;
+        AOrBdistance_temp = 0;
+        qDebug() << "distance_tempB" << distance_SendPackets_temp.B_distance;
+        if( distance_SendPackets_temp.A_distance ==  distance_SendPackets_temp.B_distance)
+        {
+             distance_SendPackets_temp.A_distance = AOrBdistance_last[0];
+             distance_SendPackets_temp.B_distance = AOrBdistance_last[1];
+        }
+
+        for(int i = 0; i < 4;i++)
+        {
+            SerialHex_temp.clear();
+            SerialHex_temp =  SerialRecvData.mid((26 + i*2), 2);    /* 读取字符串中有效值 */
+            distance_temp[i] = uint8_t(SerialHex_temp.toInt(nullptr, 16));
+            SerialHex_temp.clear();
+        }
+        AOrBdistance_temp = uint32_t(distance_temp[0] | (distance_temp[1]<<8) | (distance_temp[2]<<16) | (distance_temp[3]<<24));
+        distance_SendPackets_temp.reserved = AOrBdistance_temp;
+        AOrBdistance_temp = 0;
+
+
+
+
+        //qDebug() << "id_anchor" << distance_SendPackets_temp.id_anchor;
+
+
+        //Hex_out = uint32_t (m_serialhexdata_1.toInt(nullptr, 10));
+        //qDebug() << Hex_out;
+        //rtls_serialUpdateData = Hex_out;   /* 对待更新参数进行赋值 */
+        //m_serialUpdateData = ((double)Hex_out)/1000;
+    }
+
+    if(! SerialRecvData.isEmpty())
+    {
+         SerialRecvData.clear();
+    }
+
 }

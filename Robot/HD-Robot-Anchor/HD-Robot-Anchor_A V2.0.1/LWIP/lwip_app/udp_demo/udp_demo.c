@@ -30,7 +30,7 @@ void udp_Network_Init(void)
 	Network_Manage_t.ip[0] = 192;	
 	Network_Manage_t.ip[1] = 168;
 	Network_Manage_t.ip[2] = 1;
-	Network_Manage_t.ip[3] = 30;
+	Network_Manage_t.ip[3] = 32;
 	Network_Manage_t.local_port = 6009;
 }
 

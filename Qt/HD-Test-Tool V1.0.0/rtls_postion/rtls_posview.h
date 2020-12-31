@@ -16,6 +16,8 @@ typedef struct distance_SendPackets
   uint8_t B_id_tag;
   uint32_t B_distance;
   uint32_t reserved;
+  uint8_t FollowMode;
+  uint8_t BatteryVoltage;
   uint16_t ender;
 }distance_SendPackets;
 #pragma pack()
@@ -47,7 +49,6 @@ protected:
     int DistanceFilterAbnormalCount1 = 0;
 
 private slots:
-    void SerialRecvDataHandle();
 
 private:
     double DistanceFilterHandle(double height);

@@ -9,8 +9,10 @@
 #include <QPixmap>
 #include <QPen>
 #include <QMouseEvent>
-#include "serial/mainwindow.h"
+#include <QFile>
+#include <QDataStream>
 
+extern int save_button_triggedFlag;
 distance_SendPackets distance_SendPackets_temp;
 myWidget::myWidget(QWidget *parent) :
     QWidget(parent)
@@ -23,91 +25,7 @@ myWidget::~myWidget()
 
 }
 
-void myWidget::SerialRecvDataHandle()
-{
-    bool RecvPacketHeader;
-    bool RecvPacketEnder;
-    uint32_t AOrBdistance_temp = 0;
-    static uint32_t AOrBdistance_last[2] = {0};
-    uint8_t distance_temp[8] = { 0 };
-    QString SerialHex_temp ;
-    static uint32_t Simu_distance[2] = {0};
-    Simu_distance[0] += 50;
-    Simu_distance[1] += 50;
 
-    RecvPacketHeader =  SerialRecvData.startsWith("4844");   /* 对接收字符串进行校验 */
-    RecvPacketEnder =  SerialRecvData.endsWith("2542");
-    if((RecvPacketHeader == true) || (RecvPacketEnder == true))    /* 如果校验为真 */
-    {
-        SerialHex_temp.clear();
-        SerialHex_temp =  SerialRecvData.mid(4, 2);    /* 读取字符串中有效值 */
-        distance_SendPackets_temp.id_anchor = uint8_t(SerialHex_temp.toInt(nullptr, 16));
-        SerialHex_temp.clear();
-        SerialHex_temp =  SerialRecvData.mid(6, 2);    /* 读取字符串中有效值 */
-        distance_SendPackets_temp.A_id_tag = uint8_t(SerialHex_temp.toInt(nullptr, 16));
-        SerialHex_temp.clear();
-        for(int i = 0; i < 4;i++)
-        {
-            SerialHex_temp.clear();
-            SerialHex_temp =  SerialRecvData.mid((8 + i*2), 2);    /* 读取字符串中有效值 */
-            distance_temp[i] = uint8_t(SerialHex_temp.toInt(nullptr, 16));
-            SerialHex_temp.clear();
-        }
-        AOrBdistance_temp = uint32_t(distance_temp[0] | (distance_temp[1]<<8) | (distance_temp[2]<<16) | (distance_temp[3]<<24));
-        distance_SendPackets_temp.A_distance = uint32_t(DistanceFilterHandle( AOrBdistance_temp));
-        if(AOrBdistance_temp != 0)
-            AOrBdistance_last[0] = AOrBdistance_temp;
-        AOrBdistance_temp = 0;
-        qDebug() << "distance_tempA" << distance_SendPackets_temp.A_distance;
-
-        SerialHex_temp.clear();
-        SerialHex_temp =  SerialRecvData.mid(16, 2);    /* 读取字符串中有效值 */
-        distance_SendPackets_temp.B_id_tag = uint8_t(SerialHex_temp.toInt(nullptr, 16));
-        SerialHex_temp.clear();
-        for(int i = 0; i < 4;i++)
-        {
-            SerialHex_temp.clear();
-            SerialHex_temp =  SerialRecvData.mid((18 + i*2), 2);    /* 读取字符串中有效值 */
-            distance_temp[i] = uint8_t(SerialHex_temp.toInt(nullptr, 16));
-            SerialHex_temp.clear();
-        }
-        AOrBdistance_temp = uint32_t(distance_temp[0] | (distance_temp[1]<<8) | (distance_temp[2]<<16) | (distance_temp[3]<<24));
-        distance_SendPackets_temp.B_distance = uint32_t(DistanceFilterHandle1( AOrBdistance_temp));
-        if(AOrBdistance_temp != 0)
-            AOrBdistance_last[1] = AOrBdistance_temp;
-        AOrBdistance_temp = 0;
-        qDebug() << "distance_tempB" << distance_SendPackets_temp.B_distance;
-        if( distance_SendPackets_temp.A_distance ==  distance_SendPackets_temp.B_distance)
-        {
-             distance_SendPackets_temp.A_distance = AOrBdistance_last[0];
-             distance_SendPackets_temp.B_distance = AOrBdistance_last[1];
-        }
-
-        for(int i = 0; i < 4;i++)
-        {
-            SerialHex_temp.clear();
-            SerialHex_temp =  SerialRecvData.mid((26 + i*2), 2);    /* 读取字符串中有效值 */
-            distance_temp[i] = uint8_t(SerialHex_temp.toInt(nullptr, 16));
-            SerialHex_temp.clear();
-        }
-        AOrBdistance_temp = uint32_t(distance_temp[0] | (distance_temp[1]<<8) | (distance_temp[2]<<16) | (distance_temp[3]<<24));
-        distance_SendPackets_temp.reserved = AOrBdistance_temp;
-        AOrBdistance_temp = 0;
-        //qDebug() << "id_anchor" << distance_SendPackets_temp.id_anchor;
-
-
-        //Hex_out = uint32_t (m_serialhexdata_1.toInt(nullptr, 10));
-        //qDebug() << Hex_out;
-        //rtls_serialUpdateData = Hex_out;   /* 对待更新参数进行赋值 */
-        //m_serialUpdateData = ((double)Hex_out)/1000;
-    }
-
-    if(! SerialRecvData.isEmpty())
-    {
-         SerialRecvData.clear();
-    }
-
-}
 
 //2. 以高度为例 定义卡尔曼结构体并初始化参数
 KFP KFP_height={0.02,0,0,0,0.002,0.043};
