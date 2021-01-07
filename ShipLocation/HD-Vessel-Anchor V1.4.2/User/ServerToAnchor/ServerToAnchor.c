@@ -324,6 +324,7 @@ void DeviceResponseHeart_Handle(void)
     if(Exception_Massage_Global == ExceptionTaskSuspend) 
 		{
 			Exception_Massage_Global = 0;
+			
 			vTaskSuspend(GeneralSignal_Handle);
 		}
     HAL_RTC_GetTime(&RTC_Handler,&RTC_TimeStruct,RTC_FORMAT_BIN);

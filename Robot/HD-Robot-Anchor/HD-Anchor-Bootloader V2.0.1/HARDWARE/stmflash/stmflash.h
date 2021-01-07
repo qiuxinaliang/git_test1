@@ -53,7 +53,7 @@ typedef struct DistanceOffset_Stru
 #pragma pack()
 #endif
 
-#pragma pack(4)  
+#pragma pack(1)  
 typedef struct 
 {
 	uint8_t net_mark;
@@ -64,7 +64,7 @@ typedef struct
 }Network_Manage;
 #pragma pack()
 
-#pragma pack(4)
+#pragma pack(2)
 typedef struct STMFlashReadWrite_Stru
 {
 	uint8_t UpgradeFlag; // Éý¼¶×´Ì¬±êÖ¾

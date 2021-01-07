@@ -68,7 +68,8 @@ uint8_t RTC_Init(void)
   if(HAL_RTC_Init(&RTC_Handler) != HAL_OK) return 2;
   if(HAL_RTCEx_BKUPRead(&RTC_Handler,RTC_BKP_DR0) != 0X5050)//是否第一次配置
   { 
-    RTC_Set_Time(17,57,56,RTC_HOURFORMAT12_PM);	        //设置时间 ,根据实际时间修改
+		RTC_Set_Time(17,57,56,RTC_HOURFORMAT_24);	        //设置时间 ,根据实际时间修改
+    //RTC_Set_Time(17,57,56,RTC_HOURFORMAT12_PM);	        //设置时间 ,根据实际时间修改
     RTC_Set_Date(20,11,4,3);		                    //设置日期
     HAL_RTCEx_BKUPWrite(&RTC_Handler,RTC_BKP_DR0,0X5050);//标记已经初始化过了
   }
@@ -118,12 +119,14 @@ uint32_t time2Stamp(RTC_DateTypeDef date, RTC_TimeTypeDef time)    //北京时�
 {
 	u32 result;
 	uint16_t Year=date.Year+2000;
+	//log_print(DEBUG,("Hours = %d\r\n", time.Hours));
 	result = (Year - 1970) * 365 * 24 * 3600 + (monDays[date.Month-1] + date.Date - 1) * 24 * 3600 + (time.Hours-8) * 3600 + time.Minutes * 60 + time.Seconds;
 	//printf("[%u]",result);
 	result += (date.Month>2 && (Year % 4 == 0) && (Year % 100 != 0 || Year % 400 == 0))*24*3600;	//闰月
 	//printf("[%u]",result);
 	Year -= 1970;
-	result += (Year/4 - Year/100 + Year/400)*24 * 3600;		//闰年
+	result += (Year/4 - Year/100 + Year/400 + 1)*24 * 3600;		//闰年
+	//printf("[%u]",result);
 	return result;
 }
  
@@ -139,8 +142,8 @@ void stamp2Time(uint32_t stamp)        //时间戳转北京时间
 {
 	RTC_DateTypeDef date;
 	RTC_TimeTypeDef time;
-    uint32_t days; 
-    uint16_t leap_num;
+  uint32_t days; 
+  uint16_t leap_num;
 	
     time.Seconds = stamp % 60;
     stamp /= 60;	//获取分
@@ -179,6 +182,7 @@ void stamp2Time(uint32_t stamp)        //时间戳转北京时间
 	//RTC_Set_Time(time.Hours,time.Minutes,time.Seconds,RTC_HOURFORMAT12_PM);	
 	//RTC_Set_Date(date.Year,date.Month,date.Date,1);	//year,month,date,week:(1~7)
 }
+
 
 /*
 *********************************************************************************************************
@@ -229,7 +233,8 @@ void stamp2Time_SetTimeData(uint32_t stamp)        //时间戳转北京时间
 			date.Date = days;
 		}
 	}
-	RTC_Set_Time(time.Hours,time.Minutes,time.Seconds,RTC_HOURFORMAT12_PM);	
+	
+	RTC_Set_Time(time.Hours,time.Minutes,time.Seconds,RTC_HOURFORMAT_24);	
 	RTC_Set_Date(date.Year,date.Month,date.Date,1);	//year,month,date,week:(1~7)
 }
 

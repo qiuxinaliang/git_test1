@@ -148,6 +148,7 @@ void udp_UWB_senddata(struct udp_pcb *upcb, uint8_t *data, int len)
 		IP4_ADDR(&rmtipaddr,Network_Manage_temp.ip[0],Network_Manage_temp.ip[1],Network_Manage_temp.ip[2],Network_Manage_temp.ip[3]);
 		upcb->remote_ip = *(ip_addr_t *)&rmtipaddr;
 		upcb->remote_port = Network_Manage_t.remote_port;
+		upcb->local_port = Network_Manage_t.local_port;
 		udp_send(upcb,ptr);	//udp发送数据 
 		pbuf_free(ptr);//释放内存
 	} 
@@ -297,6 +298,7 @@ void UDP_RecvDataHandle(void)
 					memset((uint8_t *)&temp, 0, sizeof(temp));
 					memcpy((uint8_t *)&temp, chartemp + Data_Mark[j - 1] + 1, Data_Mark[j] - Data_Mark[j -1] -1);
 					Network_Manage_t->local_port = (uint32_t)atoi((const char *)temp);
+					log_print(DEBUG,("local_port = %d\r\n",Network_Manage_t->local_port));
 				}
 				
 				j++;
@@ -306,6 +308,7 @@ void UDP_RecvDataHandle(void)
 			&&(Network_Manage_t->remoteip[2] == Network_Manage_t->ip[2]) && (Network_Manage_t->remoteip[3] != Network_Manage_t->ip[3]))
 		{
 			Network_Manage_pbuf->net_mark = 0x01;
+			Network_Manage_pbuf->local_port = 6009;
 			STMFLASH_NetworkPara_Config_Write(Network_Manage_pbuf);
 		}
 		else

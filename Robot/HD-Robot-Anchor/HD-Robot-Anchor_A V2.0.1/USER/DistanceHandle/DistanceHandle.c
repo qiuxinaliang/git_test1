@@ -59,6 +59,7 @@ static double kalmanFilter(KFP *kfp,double input)
  */
 void UWB_DistanceToAngle(void)
 {
+	static uint8_t distance_cnt = 0;
 	static int DistanceCheck_Temp = 0;
 	char str_temp[20] = { 0 };
 	uint32_t A_distance_buf[20] = { 0 };
@@ -165,6 +166,22 @@ void UWB_DistanceToAngle(void)
 		udp_UWB_senddata(udppcb, (uint8_t*)&Distance_ToAngle_Stru_temp, sizeof(Distance_ToAngle_Stru));
 		memset((uint8_t*)&Distance_ToAngle_Stru_temp, 0, sizeof(Distance_ToAngle_Stru));
 		log_print( DEBUG, ("A=%d,B=%d\r\n", A_distance_average, B_distance_average));
+		if((Distance_ToAngle_Stru_temp.A_distance == 0) && (Distance_ToAngle_Stru_temp.B_distance == 0))
+			distance_cnt ++;
+		else
+			distance_cnt --;
+		if(distance_cnt > 20)
+		{
+			__set_PRIMASK(1);
+			distance_cnt = 0;
+			dwIdle(dwm);
+			dwStopReceive(dwm);
+			HAL_NVIC_DisableIRQ(DW_IRQn);
+			DW_User_Justable_Config(dwm);
+			HAL_NVIC_EnableIRQ(DW_IRQn); 
+			DW_TagEnableReceive_Distance(dwm);
+			__set_PRIMASK(0);
+		}
 	}
 }
 

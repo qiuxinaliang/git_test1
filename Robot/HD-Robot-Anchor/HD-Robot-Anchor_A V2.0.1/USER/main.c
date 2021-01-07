@@ -12,6 +12,7 @@ extern AnchorFollowCmd_Stru AnchorFollowCmd_Stru_temp;
 extern uint8_t UWB_address_temp;
 extern uint8_t address[8];
 extern int AnchorMode_Flag;
+extern int UWB_DataHandle_Flag;
 int HeartTime_Cnt = 0;
 int main(void)
 { 
@@ -109,6 +110,17 @@ int main(void)
     DW_TagRecvState_Distance(dwm);
 		if(HeartTime_Cnt >= 300)
 		{
+			if(UWB_DataHandle_Flag == 1)
+			{
+				__set_PRIMASK(1);
+				dwIdle(dwm);
+				dwStopReceive(dwm); 
+				HAL_NVIC_DisableIRQ(DW_IRQn);
+				DW_User_Justable_Config(dwm);
+				HAL_NVIC_EnableIRQ(DW_IRQn); 
+				DW_TagEnableReceive_Distance(dwm);
+				__set_PRIMASK(0);
+			}
 			HeartTime_Cnt = 0;
 			heart_data[2] = AnchorFollowCmd_Stru_temp.Follwmode;
 			udp_UWB_senddata(udppcb, (uint8_t*)heart_data, sizeof(heart_data));
