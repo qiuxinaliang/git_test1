@@ -6,7 +6,6 @@
  */
 #include "common.h"
 
-
 int main(void)
 {   
 	uint8_t ret = 0, Upgraderesponse_Flag = 1;
@@ -29,14 +28,12 @@ int main(void)
 		log_print(DEBUG,("network default config...\r\n"));
 		udp_Network_Init();
 	}
-	//E_Network_Manage_stru_temp.Centeripaddress[3] = 104;
 	E_Network_Manage_stru_temp.CenterPort = 6005;
 	
 	TIM3_Init(1000-1,900-1);        //定时器3初始化，定时器时钟为90M，分频系数为900-1，
 	MX_TIM6_Init();
 	I2C_EE_Init();
 	EE_upgrateFlag_Read();
-	//upgrateFlag = 0x01;
 	if(upgrateFlag == 0x01) 
 	{
 		log_print(DEBUG,("lwIP Initing...\n"));
@@ -76,15 +73,12 @@ int main(void)
 					HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_GPIO_PIN);
 				}
 			}
-		
 			if(Upgraderesponse_Flag == 1)
 			{
 				log_print(DEBUG,("Upgrade requst no response\n Retrying...\r\n"));
 				UDP_SendUpgradeReq();
 			}
 			lwip_periodic_handle();
-			
-			
 		}
 	}
 	else

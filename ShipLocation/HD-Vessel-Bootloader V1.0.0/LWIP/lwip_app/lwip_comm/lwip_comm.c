@@ -15,25 +15,9 @@
 #include "usart.h" 
 #include <stdio.h>
 #include "common.h"
-//////////////////////////////////////////////////////////////////////////////////	 
-//本程序只供学习使用，未经作者许可，不得用于其它任何用途
-//ALIENTEK STM32F429开发板
-//lwip通用驱动 代码	   
-//正点原子@ALIENTEK
-//技术论坛:www.openedv.com
-//创建日期:2016/1/13
-//版本：V1.0
-//版权所有，盗版必究。
-//Copyright(C) 广州市星翼电子科技有限公司 2009-2019
-//All rights reserved									  
-//*******************************************************************************
-//修改信息
-//无
-////////////////////////////////////////////////////////////////////////////////// 	   
-   
+////////////////////////////////////////////////////////////////////////////////// 	    
 __lwip_dev lwipdev;						//lwip控制结构体 
 struct netif lwip_netif;				//定义一个全局的网络接口
-
 extern u32 memp_get_memorysize(void);	//在memp.c里面定义
 extern u8_t *memp_memory;				//在memp.c里面定义.
 extern u8_t *ram_heap;					//在mem.c里面定义.
@@ -47,9 +31,14 @@ u32 DHCPfineTimer=0;	//DHCP精细处理计时器
 u32 DHCPcoarseTimer=0;	//DHCP粗糙处理计时器
 #endif
 
-//lwip中mem和memp的内存申请
-//返回值:0,成功;
-//    其他,失败
+/**
+ * @:*********************************************************************************************************: 
+ * @函 数 名: lwip_comm_mem_malloc
+ * @功能说明: lwip中mem和memp的内存申请
+ * @形    参: 无
+ * @返 回 值: 返回值:0,成功，其他,失败
+ * @**********************************************************************************************************: 
+ */
 u8 lwip_comm_mem_malloc(void)
 {
 	u32 mempsize;
@@ -65,14 +54,14 @@ u8 lwip_comm_mem_malloc(void)
 	}
 	return 0;	
 }
-//lwip中mem和memp内存释放
+/* lwip中mem和memp内存释放 */
 void lwip_comm_mem_free(void)
 { 	
 	myfree(SRAMIN,memp_memory);
 	myfree(SRAMIN,ram_heap);
 }
-//lwip 默认IP设置
-//lwipx:lwip控制结构体指针
+// lwip 默认IP设置
+// lwipx:lwip控制结构体指针
 extern Network_Manage Network_Manage_stru_temp; // 网络参数保存
 extern E_Network_Manage_stru E_Network_Manage_stru_temp;
 void lwip_comm_default_ip_set(__lwip_dev *lwipx)
@@ -109,11 +98,14 @@ void lwip_comm_default_ip_set(__lwip_dev *lwipx)
 	lwipx->dhcpstatus=0;//没有DHCP	
 } 
 
-//LWIP初始化(LWIP启动的时候使用)
-//返回值:0,成功
-//      1,内存错误
-//      2,LAN8720初始化失败
-//      3,网卡添加失败.
+/**
+ * @:*********************************************************************************************************: 
+ * @函 数 名: lwip_comm_init
+ * @功能说明: LWIP初始化(LWIP启动的时候使用)
+ * @形    参: 无
+ * @返 回 值: 返回值:0,成功,1,内存错误,2,LAN8720初始化失败,3,网卡添加失败.
+ * @**********************************************************************************************************: 
+ */
 u8 lwip_comm_init(void)
 {
   u8 retry=0;

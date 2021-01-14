@@ -1,20 +1,3 @@
-/**
-  ******************************************************************************
-  * @file    bsp_i2c_ee.c
-  * @author  STMicroelectronics
-  * @version V1.0
-  * @date    2015-xx-xx
-  * @brief   i2c EEPROM(AT24C02)应用函数bsp
-  ******************************************************************************
-  * @attention
-  *
-  * 实验平台:野火  STM32 F429 开发板 
-  * 论坛    :http://www.firebbs.cn
-  * 淘宝    :http://fire-stm32.taobao.com
-  *
-  ******************************************************************************
-  */ 
-
 #include "bsp_i2c_ee.h"
 
 #define  DATA_Size			256
@@ -31,7 +14,6 @@ uint8_t E_AnchorWorkMode;		// 基站工作模式
 uint8_t E_PowerOnType;			// 开机启动类型
 
 I2C_HandleTypeDef  I2C_Handle; 
-
 /*
 *********************************************************************************************************
 *	函 数 名: HAL_I2C_MspInit
@@ -46,7 +28,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c)
   
   I2Cx_SCL_GPIO_CLK_ENABLE();
   I2Cx_SDA_GPIO_CLK_ENABLE();
- 
   I2Cx_CLK_ENABLE(); 
   
   GPIO_InitStruct.Pin       = I2Cx_SCL_PIN;
@@ -59,7 +40,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c)
     
   GPIO_InitStruct.Pin = I2Cx_SDA_PIN;
   GPIO_InitStruct.Alternate = I2Cx_SDA_AF;
-    
+
   HAL_GPIO_Init(I2Cx_SDA_GPIO_PORT, &GPIO_InitStruct);
   
 	I2Cx_FORCE_RESET() ; 
@@ -466,9 +447,5 @@ void EE_Network_Read(void)
 {
 	I2C_EE_BufferRead((uint8_t *)&E_Network_Manage_stru_temp, EE_Network_Addr, sizeof(E_Network_Manage_stru));
 }
-
-
-
-
 
 /*********************************************END OF FILE**********************/

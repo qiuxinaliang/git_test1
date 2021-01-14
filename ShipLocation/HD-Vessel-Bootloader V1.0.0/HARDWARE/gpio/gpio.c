@@ -8,30 +8,6 @@
 
 /*
 *******************************************************************************
-*	函 数 名: DW_EXIT_GPIO_NVIC_Config
-*	功能说明: DW1000的外部中断引脚配置，并打开外部中断
-*	形	  参: 无
-*	返 回 值: 无
-*******************************************************************************
-*/
-void DW_EXIT_GPIO_NVIC_Config(void)
-{
-	GPIO_InitTypeDef GPIO_InitStruct;
-
-	__HAL_RCC_GPIOE_CLK_ENABLE();
-
-	/* 外部中断引脚配置 */
-	GPIO_InitStruct.Pin = DW_IRQ_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	HAL_GPIO_Init(DW_IRQ_PORT, &GPIO_InitStruct);
-
-	HAL_NVIC_SetPriority(DW_IRQn, 0, 0);
-	HAL_NVIC_EnableIRQ(DW_IRQn); 
-}
-
-/*
-*******************************************************************************
 *	函 数 名: LED_Status_Init
 *	功能说明: LED的PIN初始初始化配置
 *	形	  参: 无
@@ -44,9 +20,9 @@ void LED_Status_Init(void)
 
 	__HAL_RCC_LED_CLK_ENABLE();			//开启GPIOA时钟
 	GPIO_Initure.Pin = LED_GPIO_PIN; //PB1,0
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;  //推挽输出
-	GPIO_Initure.Pull = GPIO_PULLUP;          //上拉
-	GPIO_Initure.Speed = GPIO_SPEED_LOW; //     //高速
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;  
+	GPIO_Initure.Pull = GPIO_PULLUP;          
+	GPIO_Initure.Speed = GPIO_SPEED_LOW; 
 	HAL_GPIO_Init(LED_GPIO_PORT,&GPIO_Initure);
 }
 

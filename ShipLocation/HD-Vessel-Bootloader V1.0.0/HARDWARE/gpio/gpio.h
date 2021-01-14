@@ -18,7 +18,6 @@
 #define LED_GPIO_PIN GPIO_PIN_3
 #define LED_GPIO_PORT GPIOE
 
-void DW_EXIT_GPIO_NVIC_Config(void);
 void LED_Status_Init(void);
 
 #ifdef __cplusplus

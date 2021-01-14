@@ -1,24 +1,5 @@
 #include "sys.h"
 
-//时钟系统配置函数
-//Fvco=Fs*(plln/pllm);
-//SYSCLK=Fvco/pllp=Fs*(plln/(pllm*pllp));
-//Fusb=Fvco/pllq=Fs*(plln/(pllm*pllq));
-
-//Fvco:VCO频率
-//SYSCLK:系统时钟频率
-//Fusb:USB,SDIO,RNG等的时钟频率
-//Fs:PLL输入时钟频率,可以是HSI,HSE等. 
-//plln:主PLL倍频系数(PLL倍频),取值范围:64~432.
-//pllm:主PLL和音频PLL分频系数(PLL之前的分频),取值范围:2~63.
-//pllp:系统时钟的主PLL分频系数(PLL之后的分频),取值范围:2,4,6,8.(仅限这4个值!)
-//pllq:USB/SDIO/随机数产生器等的主PLL分频系数(PLL之后的分频),取值范围:2~15.
-
-//外部晶振为25M的时候,推荐值:plln=360,pllm=25,pllp=2,pllq=8.
-//得到:Fvco=25*(360/25)=360Mhz
-//     SYSCLK=360/2=180Mhz
-//     Fusb=360/8=45Mhz
-//返回值:0,成功;1,失败
 void Stm32_Clock_Init(u32 plln,u32 pllm,u32 pllp,u32 pllq)
 {
 	HAL_StatusTypeDef ret = HAL_OK;
@@ -31,14 +12,14 @@ void Stm32_Clock_Init(u32 plln,u32 pllm,u32 pllp,u32 pllq)
 	//时使性能与功耗实现平衡，此功能只有STM32F42xx和STM32F43xx器件有，
 	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);//设置调压器输出电压级别1
 	
-	RCC_OscInitStructure.OscillatorType=RCC_OSCILLATORTYPE_HSE;    //时钟源为HSE
-	RCC_OscInitStructure.HSEState=RCC_HSE_ON;                      //打开HSE
-	RCC_OscInitStructure.PLL.PLLState=RCC_PLL_ON;//打开PLL
-	RCC_OscInitStructure.PLL.PLLSource=RCC_PLLSOURCE_HSE;//PLL时钟源选择HSE
-	RCC_OscInitStructure.PLL.PLLM=pllm; //主PLL和音频PLL分频系数(PLL之前的分频),取值范围:2~63.
-	RCC_OscInitStructure.PLL.PLLN=plln; //主PLL倍频系数(PLL倍频),取值范围:64~432.  
-	RCC_OscInitStructure.PLL.PLLP=pllp; //系统时钟的主PLL分频系数(PLL之后的分频),取值范围:2,4,6,8.(仅限这4个值!)
-	RCC_OscInitStructure.PLL.PLLQ=pllq; //USB/SDIO/随机数产生器等的主PLL分频系数(PLL之后的分频),取值范围:2~15.
+	RCC_OscInitStructure.OscillatorType = RCC_OSCILLATORTYPE_HSE;    //时钟源为HSE
+	RCC_OscInitStructure.HSEState = RCC_HSE_ON;                      //打开HSE
+	RCC_OscInitStructure.PLL.PLLState = RCC_PLL_ON;//打开PLL
+	RCC_OscInitStructure.PLL.PLLSource = RCC_PLLSOURCE_HSE;//PLL时钟源选择HSE
+	RCC_OscInitStructure.PLL.PLLM = pllm; //主PLL和音频PLL分频系数(PLL之前的分频),取值范围:2~63.
+	RCC_OscInitStructure.PLL.PLLN = plln; //主PLL倍频系数(PLL倍频),取值范围:64~432.  
+	RCC_OscInitStructure.PLL.PLLP = pllp; //系统时钟的主PLL分频系数(PLL之后的分频),取值范围:2,4,6,8.(仅限这4个值!)
+	RCC_OscInitStructure.PLL.PLLQ = pllq; //USB/SDIO/随机数产生器等的主PLL分频系数(PLL之后的分频),取值范围:2~15.
 	ret=HAL_RCC_OscConfig(&RCC_OscInitStructure);//初始化
 
 	if(ret!=HAL_OK) while(1);

@@ -8,7 +8,7 @@ struct ip_addr rmtipaddr;  	//远端ip地址
 u8 udp_demo_flag;
 u8 UDP_Create_Status = true;
 
-// 网络配置初始化
+/* 网络配置初始化 */
 void udp_Network_Init(void)
 {
 	E_Network_Manage_stru_temp.Anchoripaddress[0] = 192;
@@ -40,9 +40,7 @@ void udp_Network_Init(void)
 	E_Network_Manage_stru_temp.EnginePort = 6005;
 }
 
-
-//设置远端IP地址
-//设置远端IP地址
+/* 设置远端IP地址 */
 void udp_demo_set_remoteip(void)
 {                  
 	lwipdev.remoteip[0] = E_Network_Manage_stru_temp.Centeripaddress[0];
@@ -95,7 +93,7 @@ void udp_create(void)
 	}
 }
 
-//UDP服务器回调函数
+/* UDP服务器回调函数 */
 void udp_demo_recv(void *arg,struct udp_pcb *upcb,struct pbuf *p,struct ip_addr *addr,u16_t port)
 {
 	u32 data_len = 0;
@@ -127,23 +125,8 @@ void udp_demo_recv(void *arg,struct udp_pcb *upcb,struct pbuf *p,struct ip_addr 
 		udp_disconnect(upcb); 
 	} 
 } 
-#if 0
-//UDP服务器发送数据
-void udp_demo_senddata(struct udp_pcb *upcb)
-{
-	u8 *tcp_demo_sendbuf="Apollo STM32F4/F7 UDP demo send data\r\n";
-	struct pbuf *ptr;
-	ptr=pbuf_alloc(PBUF_TRANSPORT,strlen((char*)tcp_demo_sendbuf),PBUF_POOL); //申请内存
-	if(ptr)
-	{
-		ptr->payload=(void *)tcp_demo_sendbuf; 
-		udp_send(upcb,ptr);	//udp发送数据 
-		pbuf_free(ptr);//释放内存
-	} 
-} 
-#endif
 
-//UDP服务器发送数据
+/* UDP服务器发送数据 */
 void udp_UWB_senddata(struct udp_pcb *upcb, uint8_t *data, int len)
 {
 	Network_Manage udp_Network_Manage_temp;
@@ -164,7 +147,7 @@ void udp_UWB_senddata(struct udp_pcb *upcb, uint8_t *data, int len)
 	} 
 } 
 
-//关闭tcp连接
+/* 关闭udp连接 */
 void udp_demo_connection_close(struct udp_pcb *upcb)
 {
 	udp_disconnect(upcb); 
