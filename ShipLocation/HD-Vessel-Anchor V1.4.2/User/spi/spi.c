@@ -8,8 +8,8 @@
 
 /*
 *******************************************************************************
-*	函 数 名: DW_SPI_Init
-*	功能说明: DW1000的SPI通信硬件初始化
+*	函 数 名: Lora_SPI_Init
+*	功能说明: Lora的SPI通信硬件初始化
 *	形	  参: 无
 *	返 回 值: 无
 *******************************************************************************
@@ -107,7 +107,6 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
 	if(hspi->Instance == Lora_SPI)
 	{
 		Lora_SPI_CLK_DISABLE();
-
 		HAL_GPIO_DeInit(Lora_SPI_SCK_PORT, Lora_SPI_SCK_PIN);
 		HAL_GPIO_DeInit(Lora_SPI_MISO_PORT, Lora_SPI_MISO_PIN);
 		HAL_GPIO_DeInit(Lora_SPI_MOSI_PORT, Lora_SPI_MOSI_PIN);

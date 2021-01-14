@@ -68,13 +68,13 @@ uint8_t SpiInOut( uint8_t outData )
 
 void SpiNSSEnable( uint8_t status )
 {
-  HAL_GPIO_WritePin(Lora_SPI_CS_PORT, Lora_SPI_CS_PIN, status );
+  HAL_GPIO_WritePin(Lora_SPI_CS_PORT, Lora_SPI_CS_PIN, status);
 }
 
 
-void SX127X_ResetPinControl( uint8_t status ){
-	HAL_GPIO_WritePin( RESET_IOPORT, RESET_PIN, status );
-	
+void SX127X_ResetPinControl( uint8_t status )
+{
+	HAL_GPIO_WritePin(RESET_IOPORT, RESET_PIN, status);
 }
 
 

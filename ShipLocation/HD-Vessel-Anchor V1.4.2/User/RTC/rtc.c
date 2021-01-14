@@ -119,7 +119,6 @@ uint32_t time2Stamp(RTC_DateTypeDef date, RTC_TimeTypeDef time)    //北京时�
 {
 	u32 result;
 	uint16_t Year=date.Year+2000;
-	//log_print(DEBUG,("Hours = %d\r\n", time.Hours));
 	result = (Year - 1970) * 365 * 24 * 3600 + (monDays[date.Month-1] + date.Date - 1) * 24 * 3600 + (time.Hours-8) * 3600 + time.Minutes * 60 + time.Seconds;
 	//printf("[%u]",result);
 	result += (date.Month>2 && (Year % 4 == 0) && (Year % 100 != 0 || Year % 400 == 0))*24*3600;	//闰月

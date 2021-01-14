@@ -20,13 +20,10 @@ uint8_t UDP_public_Sum_check(uint8_t *str, uint32_t str_length)
   int i = 0;
   
   SumCheck_Value = str[0];
-	//printf("%02x",str[0]);
   for(i = 1; i < str_length; i++)
   {
-		 //printf("%02x",str[i]);
-     SumCheck_Value ^= str[i];
+    SumCheck_Value ^= str[i];
   }
-  //log_print(DEBUG, ("\r\nXorCheck_Value = %x\r\n",  SumCheck_Value));
   return SumCheck_Value;
 }
 

@@ -7,12 +7,18 @@
 #include "time.h"
 TIM_HandleTypeDef htim6;
 
-/* TIM6 init function */
+/*
+*******************************************************************************
+*	函 数 名:  MX_TIM6_Init
+*	功能说明: 定时器6初始化
+*	形	  参: 无
+*	返 回 值: 无
+*******************************************************************************
+*/
 void MX_TIM6_Init(void)
 {
   TIM_MasterConfigTypeDef sMasterConfig = {0};
 	
-
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 36000 -1;  // 180M / 2 / 36000 = 2500,表示计数器1s可计数2500次
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -44,14 +50,13 @@ void IWDG_Init(uint8_t prer,uint16_t rlr)
 	HAL_IWDG_Start(&IWDG_Handler);		//开启独立看门狗
 }
     
-//喂独立看门狗
+/* 喂独立看门狗 */
 void IWDG_Feed(void)
 {   
 	HAL_IWDG_Refresh(&IWDG_Handler); 	//喂狗
 }
 
-//定时器底册驱动，开启时钟，设置中断优先级
-//此函数会被HAL_TIM_Base_Init()函数调用
+/* 定时器底册驱动，开启时钟，设置中断优先级 */
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
 {
 	__HAL_RCC_TIM6_CLK_ENABLE();
@@ -66,20 +71,17 @@ void TIM6_DAC_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim6);
 }
 
-//定时器3中断服务函数调用
+/* 定时器中断服务函数调用 */
 uint8_t tim6_irq_flag = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-
   if(htim ==(&htim6))
 	{
 		tim6_irq_flag = 1;
-		//log_print(DEBUG, ("tim6_irq\r\n"));
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-
 void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 {
 	__HAL_RCC_TIM6_CLK_DISABLE();

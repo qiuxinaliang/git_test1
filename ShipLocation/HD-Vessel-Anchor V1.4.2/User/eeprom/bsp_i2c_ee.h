@@ -128,16 +128,7 @@ extern uint8_t upgrateFlag;		// 升级标志
 extern uint8_t E_DeviceType;				// 设备类型
 extern uint8_t E_AnchorWorkMode;		// 基站工作模式
 extern uint8_t E_PowerOnType;			// 开机启动类型
-//#pragma pack(1)
-//typedef struct STMFlashReadWrite_Stru
-//{
-//	upgrateInfo_stru upgrateInfo_stru_temp;
-//	HardwareInfo_Stru HardwareInfo_stru_temp;
-//	Network_Manage Network_Manage_stru_temp; // 网络参数保存
-//	Staticgloabl_stru Staticgloabl_stru_temp;
-//}STMFlashReadWrite_Stru;
-//#pragma pack()																					
-
+																				
 void I2C_EE_Init(void);
 										  
 void I2C_EE_BufferWrite(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite);

@@ -5,8 +5,8 @@
  * @**********************************************************************************************************: 
  */
 #include "board.h"
-
 #include <cm_backtrace.h>
+
 #define u32 uint32_t
 #define HARDWARE_VERSION               "V1.0.0"
 #define SOFTWARE_VERSION               "V0.1.0"
@@ -51,90 +51,6 @@ void BSP_Init(void)
 	cm_backtrace_init("HD-Vessel-Anchor", HARDWARE_VERSION, SOFTWARE_VERSION);
   log_print(DEBUG,("name = HD-Vessel-Anchor, HARDWARE_VERSION  = %s, SOFTWARE_VERSION = %s", HARDWARE_VERSION, SOFTWARE_VERSION));
 }
-
-/*
-*********************************************************************************************************
-*	函 数 名:  upgrateInfo_Init
-*	功能说明: 升级信息初始化
-*	形    参: 无
-*	返 回 值: 无
-*********************************************************************************************************
-*/
-#if 0
-extern upgrateInfo_stru upgrateInfo_stru_temp;
-extern HardwareInfo_Stru HardwareInfo_stru_temp;
-extern Network_Manage Network_Manage_stru_temp; // 网络参数保存
-static void upgrateInfo_Init(void)
-{
-  upgrateInfo_stru_temp.upgrate_mark = 0x00;
-  upgrateInfo_stru_temp.upgrateFlag = 0x00;
-  upgrateInfo_stru_temp.HardwareVersion[0] = 0x01;
-  upgrateInfo_stru_temp.HardwareVersion[1] = 0x00;
-  upgrateInfo_stru_temp.HardwareVersion[2] = 0x01;
-  upgrateInfo_stru_temp.SoftwareVersion[0] = 0x01;
-  upgrateInfo_stru_temp.SoftwareVersion[1] = 0x00;
-  upgrateInfo_stru_temp.SoftwareVersion[2] = 0x00;
-}
-
-/*
-*********************************************************************************************************
-*	函 数 名:  HardwareInfo_Init
-*	功能说明: 设备硬件工作模式初始化
-*	形    参: 无
-*	返 回 值: 无
-*********************************************************************************************************
-*/
-uint8_t DeviceSelfCheck = 0;
-static void HardwareInfo_Init(void)
-{
-  HardwareInfo_stru_temp.HardwareInfo_mark = 0x00; 
-  HardwareInfo_stru_temp.DeviceType = SeaLoraAnchor;
-  HardwareInfo_stru_temp.AnchorWorkMode = Lora_Commun_Mode;
-  HardwareInfo_stru_temp.PowerOnType = PowerOnOpen;
-  HardwareInfo_stru_temp.SelfCheckInfo = DeviceSelfCheck;
-}
-
-/*
-*********************************************************************************************************
-*	函 数 名:  Network_Manage_Init
-*	功能说明: 网络参数初始化
-*	形    参: 无
-*	返 回 值: 无
-*********************************************************************************************************
-*/
-static void Network_Manage_Init(void)
-{
-  Network_Manage_stru_temp.net_mark = 0x00;
-  Network_Manage_stru_temp.Anchoripaddress[0] = 192;
-  Network_Manage_stru_temp.Anchoripaddress[1] = 168;
-  Network_Manage_stru_temp.Anchoripaddress[2] = 1;
-  Network_Manage_stru_temp.Anchoripaddress[3] = 31;
-  Network_Manage_stru_temp.AnchorPort = 6009;
-  
-  Network_Manage_stru_temp.Subnetmask[0] = 255;
-  Network_Manage_stru_temp.Subnetmask[1] = 255;
-  Network_Manage_stru_temp.Subnetmask[2] = 255;
-  Network_Manage_stru_temp.Subnetmask[3] = 0;
-
-  Network_Manage_stru_temp.Gateway[0] = 192;
-  Network_Manage_stru_temp.Gateway[1] = 168;
-  Network_Manage_stru_temp.Gateway[2] = 1;
-  Network_Manage_stru_temp.Gateway[3] = 1;
-
-  Network_Manage_stru_temp.Centeripaddress[0] = 192;
-  Network_Manage_stru_temp.Centeripaddress[1] = 168;
-  Network_Manage_stru_temp.Centeripaddress[2] = 1;
-  Network_Manage_stru_temp.Centeripaddress[3] = 100;
-  Network_Manage_stru_temp.CenterPort = 6009;
-
-  Network_Manage_stru_temp.Engineipaddress[0] = 192;
-  Network_Manage_stru_temp.Engineipaddress[1] = 168;
-  Network_Manage_stru_temp.Engineipaddress[2] = 1;
-  Network_Manage_stru_temp.Engineipaddress[3] = 100;
-  Network_Manage_stru_temp.EnginePort = 6009;
-}
-#endif
-
 
 /*
 *********************************************************************************************************
@@ -226,50 +142,7 @@ static void HardwareConfigInfo_Handle(void)
 	log_print(DEBUG,("Engine IP..........................%d.%d.%d.%d\r\n",E_Network_Manage_stru_temp.Engineipaddress[0],
 	E_Network_Manage_stru_temp.Engineipaddress[1],E_Network_Manage_stru_temp.Engineipaddress[2],E_Network_Manage_stru_temp.Engineipaddress[3]));
   log_print(DEBUG,("LocalPort = %d, CenterPort = %d, EnginePort = %d", E_Network_Manage_stru_temp.AnchorPort, E_Network_Manage_stru_temp.CenterPort,
-						E_Network_Manage_stru_temp.EnginePort));
-		
-	#if 0
-  upgrateInfo_Read();
-	//log_print(DEBUG, ("UpgradeFile_Total = %d\r\n",upgrateInfo_stru_temp.SoftwareVersion[0]));
-	//log_print(DEBUG, ("UpgradeFile_Total = %d\r\n",upgrateInfo_stru_temp.SoftwareVersion[1]));
-	//log_print(DEBUG, ("UpgradeFile_Total = %d\r\n",upgrateInfo_stru_temp.SoftwareVersion[2]));
-  if(upgrateInfo_stru_temp.upgrate_mark != 0x01)
-  {
-		log_print(DEBUG,("upgrateInfo default config...\r\n"));
-    upgrateInfo_Init();
-  }
-	if(upgrateInfo_stru_temp.upgrateFlag != 0x00)
-	{
-		upgrateInfo_stru_temp.upgrateFlag = 0;
-		upgrateInfo_Write();
-	}
-  HardwareInfo_Read();
-  if(HardwareInfo_stru_temp.HardwareInfo_mark != 0x01)
-  {
-		log_print(DEBUG,("HardwareInfo config...\r\n"));
-    HardwareInfo_Init();
-  }
-  Network_Manage_Read();
-  if(Network_Manage_stru_temp.net_mark != 0x01)
-  {
-		//log_print(DEBUG,("network default config...\r\n"));
-    Network_Manage_Init();
-  }
-	log_print(DEBUG,("Static IP........................%d.%d.%d.%d\r\n",E_Network_Manage_stru_temp.Anchoripaddress[0],
-	E_Network_Manage_stru_temp.Anchoripaddress[1],E_Network_Manage_stru_temp.Anchoripaddress[2],E_Network_Manage_stru_temp.Anchoripaddress[3]));
-	log_print(DEBUG,("netmask..........................%d.%d.%d.%d\r\n",E_Network_Manage_stru_temp.Subnetmask[0],
-	E_Network_Manage_stru_temp.Subnetmask[1],E_Network_Manage_stru_temp.Subnetmask[2],E_Network_Manage_stru_temp.Subnetmask[3]));
-						
-	log_print(DEBUG,("gateway..........................%d.%d.%d.%d\r\n",E_Network_Manage_stru_temp.Gateway[0],
-	E_Network_Manage_stru_temp.Gateway[1],E_Network_Manage_stru_temp.Gateway[2],E_Network_Manage_stru_temp.Gateway[3]));
-	
-	log_print(DEBUG,("Center IP..........................%d.%d.%d.%d\r\n",E_Network_Manage_stru_temp.Centeripaddress[0],
-	E_Network_Manage_stru_temp.Centeripaddress[1],E_Network_Manage_stru_temp.Centeripaddress[2],E_Network_Manage_stru_temp.Centeripaddress[3]));
-	log_print(DEBUG,("Engine IP..........................%d.%d.%d.%d\r\n",E_Network_Manage_stru_temp.Engineipaddress[0],
-	E_Network_Manage_stru_temp.Engineipaddress[1],E_Network_Manage_stru_temp.Engineipaddress[2],E_Network_Manage_stru_temp.Engineipaddress[3]));
-  log_print(DEBUG,("LocalPort = %d, CenterPort = %d, EnginePort = %d", E_Network_Manage_stru_temp.AnchorPort, E_Network_Manage_stru_temp.CenterPort,
-						E_Network_Manage_stru_temp.EnginePort));
-	#endif
+						E_Network_Manage_stru_temp.EnginePort));	
 }
 
 
@@ -287,7 +160,6 @@ static void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct;
   
   __HAL_RCC_PWR_CLK_ENABLE();   /* Enable Power Control clock */
-  
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
@@ -303,7 +175,6 @@ static void SystemClock_Config(void)
     while(1) {}
   }
 
- 
   HAL_PWREx_EnableOverDrive();     /* 激活 OverDrive 模式 */
   /* 选择PLLCLK作为SYSCLK，并配置 HCLK, PCLK1 and PCLK2 的时钟分频因子 
 	 * SYSCLK = PLLCLK     = 180M
@@ -320,14 +191,10 @@ static void SystemClock_Config(void)
   {
     while(1) {}
   }
-  
   HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/configTICK_RATE_HZ);
   HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);   /* SysTick_IRQn interrupt configuration */
 }
-
-
-
 /*
 *********************************************************************************************************
 *	函 数 名:GPIO_CLK_Init
@@ -338,7 +205,6 @@ static void SystemClock_Config(void)
 */
 static void GPIO_CLK_Init(void)
 {
-
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -348,7 +214,6 @@ static void GPIO_CLK_Init(void)
   __HAL_RCC_GPIOG_CLK_ENABLE();
   __HAL_RCC_GPIOI_CLK_ENABLE();
 }
-
 
 //THUMB指令不支持汇编内联
 //采用如下方法实现执行汇编指令WFI  

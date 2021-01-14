@@ -78,19 +78,13 @@ static void udpecho_thread(void *arg)
         NetworkRecvData_Stru_temp.NetworkRecvData_Len = recv_data_len;
         memcpy((uint8_t *)NetworkRecvData_Stru_temp.NetworkRecvData_Buffer, (uint8_t *)recv_data, recv_data_len);
         Network_Communciton_Flag = 1;
-				//printf("RX\n");
 				USART1_For_Debug_tx(NetworkRecvData_Stru_temp.NetworkRecvData_Len, (uint8_t *)NetworkRecvData_Stru_temp.NetworkRecvData_Buffer);
-				//printf("\n");
-        //log_print(DEBUG,("receive from %s\n",inet_ntoa(seraddr.sin_addr)));		/*显示发送端的IP地址*/
-				//log_print(DEBUG,("len = %d\n",NetworkRecvData_Len));		/*显示发送端的IP地址*/
         //log_print(DEBUG,("recevce:%s",(uint8_t *)&NetworkRecvData_Stru_temp.NetworkRecvData_Buffer));		/*显示发送端发来的字串*/
         HAL_GPIO_WritePin(LED_GPIO_PORT, LED_GPIO_PIN, GPIO_PIN_RESET);
         vTaskDelay(10);
         HAL_GPIO_WritePin(LED_GPIO_PORT, LED_GPIO_PIN, GPIO_PIN_SET);
         vTaskDelay(20);
 				HAL_GPIO_WritePin(LED_GPIO_PORT, LED_GPIO_PIN, GPIO_PIN_RESET);
-				//vTaskDelay(20);/* 延时2000个tick */
-				//HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_GPIO_PIN);
       }
 			//vTaskDelay(50);/* 延时2000个tick */
     }

@@ -54,7 +54,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
+          <BrowseInformation>1</BrowseInformation>
           <ListingPath>..\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -777,21 +777,6 @@
               <FilePath>..\User\RTC\rtc.c</FilePath>
             </File>
             <File>
-              <FileName>iacs_queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\queue\iacs_queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>malloc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\mymalloc\malloc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stmflash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\stmflash\stmflash.c</FilePath>
-            </File>
-            <File>
               <FileName>time.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\Timer\time.c</FilePath>
@@ -805,6 +790,21 @@
               <FileName>network.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\network\network.c</FilePath>
+            </File>
+            <File>
+              <FileName>malloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\mymalloc\malloc.c</FilePath>
+            </File>
+            <File>
+              <FileName>iacs_queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\queue\iacs_queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>stmflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\stmflash\stmflash.c</FilePath>
             </File>
           </Files>
         </Group>

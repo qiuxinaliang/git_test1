@@ -159,7 +159,6 @@ uint32_t USART1_For_Debug_tx(uint32_t data_length, const uint8_t* data)
     return data_length;
 }
 
-
 /**
  * @:*********************************************************************************************************: 
  * @函 数 名: USART3_For_Lora_rx
@@ -211,10 +210,6 @@ uint32_t USART3_For_Lora_tx(uint32_t data_length, const uint8_t* data)
     ptr = NULL;
     return data_length;
 }
-
-
-
-
 
 /*****************  发送字符串 **********************/
 void Usart_SendString(uint8_t *str)

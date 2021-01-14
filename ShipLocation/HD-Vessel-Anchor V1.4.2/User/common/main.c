@@ -10,7 +10,6 @@
 static TaskHandle_t AppTaskCreate_Handle = NULL;  /* 创建任务句柄 */
 static void AppTaskCreate(void);                  /* 用于创建任务 */
 extern void TCPIP_Init(void);
-
 /*
 *********************************************************************************************************
 *	函 数 名: main
@@ -33,8 +32,7 @@ int main(void)
     vTaskStartScheduler();   /* 启动任务，开启调度 */
 	else
     return -1;   
-  
-  while(1);   /* 正常不会执行到这里 */    
+  while(1);   
 }
 
 /*
@@ -51,9 +49,9 @@ static void AppTaskCreate(void)
   
   TCPIP_Init();
   udpecho_init();
-  taskENTER_CRITICAL();           //进入临界区
+  taskENTER_CRITICAL();           
   startup_App_Task();
-  vTaskDelete(AppTaskCreate_Handle); //删除AppTaskCreate任务
-  taskEXIT_CRITICAL();            //退出临界区
+  vTaskDelete(AppTaskCreate_Handle); /* 删除AppTaskCreate任务 */
+  taskEXIT_CRITICAL();       
 }
 

@@ -82,7 +82,7 @@ void HAL_ETH_MspInit(ETH_HandleTypeDef* ethHandle)
 // 硬件复位
 static void Eth_Reset(void)
 { 
-   /* PHY RESET: PI1 */
+  /* PHY RESET: PI1 */
   GPIO_InitTypeDef GPIO_InitStructure;
   __HAL_RCC_GPIOA_CLK_ENABLE();
   

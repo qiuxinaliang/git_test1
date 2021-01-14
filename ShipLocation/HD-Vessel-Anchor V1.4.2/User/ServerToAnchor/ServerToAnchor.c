@@ -244,15 +244,13 @@ void ServiceSendConfig_Handle(void)
       E_Network_Manage_stru_temp.EnginePort = ServerSendConfig_Stru_temp->EnginePort;
 			log_print(DEBUG,("EnginePort = %d\r\n", E_Network_Manage_stru_temp.EnginePort));
       E_Network_Manage_stru_temp.net_mark = 0x01;
-      //Network_Manage_Write();
       EE_Network_Write();
       EE_AnchorWorkMode_Write();
-      //AnchorWorkMode_Write();
 			SYS_REBOOT();
     }
     else
     {
-      log_print(DEBUG,("ServerSendConfig_Stru Calibration Fail\r\n"));
+      log_print(ERR,("ServerSendConfig_Stru Calibration Fail\r\n"));
     }
     myfree(SRAMIN, ServerSendConfig_Stru_temp);
   }
@@ -419,9 +417,7 @@ void UpdateTimeReqReponse_Handle(void)
     if(CalibrationValue_temp == Response_Stru_temp->ProtocolFrameEnderUint_Temp.CalibrationValue)
     {
       TimeStamp = Response_Stru_temp->TimeStamp;
-			//Staticgloabl_stru_temp.timestamp = TimeStamp;
       E_Staticgloabl_stru_temp.timestamp = TimeStamp;
-			//Static_Gloabl_Write();
       EE_TimeStamp_Write();
       stamp2Time_SetTimeData(TimeStamp);  // 
 			Exception_Massage_Global = UpdateTimeReqReponse;
@@ -429,7 +425,7 @@ void UpdateTimeReqReponse_Handle(void)
     }
     else
     {
-      log_print(DEBUG,("UpdateTimeReqReponse Fail\r\n"));
+      log_print(ERR,("UpdateTimeReqReponse Fail\r\n"));
     }
     myfree(SRAMIN, Response_Stru_temp);
   }
@@ -469,7 +465,7 @@ void ServerFindAnchorInfo_Handle(void)
     }
     else
     {
-      log_print(DEBUG,("ServerFindAnchorInfo Calibration Fail\r\n"));
+      log_print(ERR,("ServerFindAnchorInfo Calibration Fail\r\n"));
     }
     myfree(SRAMIN, ServerFindAnchorInfo_Stru_temp);
   }
